@@ -10,18 +10,28 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="auth-page">
-      <h1>Rejestracja</h1>
-      <form onSubmit={handleRegister}>
-        <input type="text" placeholder="Nazwa użytkownika" required />
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Hasło" required />
-        <input type="password" placeholder="Potwierdź Hasło" required />
-        <button type="submit">Stwórz konto</button>
-      </form>
-      <p>
-        Masz już konto? <a href="/">Zaloguj</a>
-      </p>
+    <div className="auth-container">
+      <div className="background-circle circle-small"></div>
+      <div className="background-circle circle-big"></div>
+      <h1 className="app-title">SpaceMath</h1>
+      <div className="auth-box">
+        <form onSubmit={handleRegister}>
+          <p className="auth-words">Email</p>
+          <input type="email" className="auth-input" required />
+          <p className="auth-words">Nazwa użytkownika</p>
+          <input type="text" className="auth-input" required />
+          <p className="auth-words">Hasło</p>
+          <input type="password" className="auth-input" required />
+          <p className="auth-words">Potwierdź hasło</p>
+          <input type="password" className="auth-input" required />
+          <button type="submit" className="auth-button">
+            Stwórz konto
+          </button>
+        </form>
+        <div className="auth-links">
+          <a href="/">Zaloguj się</a>
+        </div>
+      </div>
     </div>
   );
 };
