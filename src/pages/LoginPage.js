@@ -10,16 +10,25 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-page">
-      <h1>Logowanie</h1>
-      <form onSubmit={handleLogin}>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Hasło" required />
-        <button type="submit">Zaloguj</button>
-      </form>
-      <p>
-        Nie masz konta? <a href="/register">Rejestracja</a>
-      </p>
+    <div className="auth-container">
+      <div className="background-circle circle-small"></div>
+      <div className="background-circle circle-big"></div>
+      <h1 className="app-title">SpaceMath</h1>
+      <div className="auth-box">
+        <form onSubmit={handleLogin}>
+          <p className="auth-words">Nazwa użytkownika</p>
+          <input type="text" className="auth-input" required />
+          <p className="auth-words">Hasło</p>
+          <input type="password" className="auth-input" required />
+          <button type="submit" className="auth-button">
+            Zaloguj się
+          </button>
+        </form>
+        <div className="auth-links">
+          <a href="/forgot-password">Zapomniałeś hasła?</a>
+          <a href="/register">Zarejestruj się</a>
+        </div>
+      </div>
     </div>
   );
 };

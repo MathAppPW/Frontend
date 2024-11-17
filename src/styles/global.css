@@ -1,3 +1,4 @@
+/* Ogólne ustawienia */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -5,40 +6,134 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: radial-gradient(circle at bottom, navy 0, black 100%);
   height: 100vh;
-  background-color: #000000;
+  overflow: hidden;
+  color: #ffffff;
 }
 
-.auth-page,
-.main-menu {
+/* Tytuł aplikacji */
+.app-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 36px;
   text-align: center;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+  color: #ffffff;
 }
 
-form {
+/* Kontener logowania */
+.auth-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Box logowania */
+.auth-box {
+  margin: 0;
+  background-color: #1a084e;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  width: 420px;
+  text-align: center;
+  border: 3px solid #ffffff;
+  position: relative;
 }
 
-button {
+.auth-box::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #ad15f3;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
   padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  border-radius: 1px;
+  filter: blur(1.5rem);
+}
+
+/* Inputy */
+.auth-input {
+  width: 85%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  background: #160c6f;
+  color: #ffffff;
+}
+
+.auth-words {
+  font-family: "Orbitron", sans-serif;
+  margin-top: 0px;
+  font-size: 18px;
+}
+
+.auth-input::placeholder {
+  color: #a7a7a7;
+}
+
+/* Przycisk logowania */
+.auth-button {
+  font-family: "Orbitron", sans-serif;
+  width: 45%;
+  padding: 10px;
+  background-color: #ad15f3;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #ffffff;
   cursor: pointer;
+  border: 2px solid #ffffff;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
+.auth-button:hover {
+  background-color: #ad15f3;
+}
+
+.auth-links {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.auth-links a {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+/* Okrąg w tle */
+.background-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid white;
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.circle-small {
+  width: 880px;
+  height: 880px;
+}
+
+.circle-big {
+  width: 900px;
+  height: 900px;
 }
