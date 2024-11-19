@@ -17,9 +17,17 @@ const LoginPage = () => {
       <div className="auth-box">
         <form onSubmit={handleLogin}>
           <p className="auth-words">Nazwa użytkownika</p>
-          <input type="text" className="auth-input" required />
+          <input
+            type="text"
+            className="auth-input"
+            required
+          />
           <p className="auth-words">Hasło</p>
-          <input type="password" className="auth-input" required />
+          <input
+            type="password"
+            className="auth-input"
+            required
+          />
           <button type="submit" className="auth-button">
             Zaloguj się
           </button>
