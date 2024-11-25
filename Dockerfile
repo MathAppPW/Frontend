@@ -1,8 +1,9 @@
-FROM node:22.11
+FROM node:20-bullseye
 
 WORKDIR /app
-COPY package.json /app
-RUN npm install
+COPY package.json .
+COPY package-lock.json .
+RUN npm install --loglevel verbose
 
 COPY . ./
 EXPOSE 3000
