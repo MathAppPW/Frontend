@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
 const RegisterPage = () => {
   const navigate = useNavigate();
 
@@ -10,6 +12,7 @@ const RegisterPage = () => {
   };
 
   return (
+    
     <div className="auth-container">
       <div className="background-circle circle-small"></div>
       <div className="background-circle circle-big"></div>
