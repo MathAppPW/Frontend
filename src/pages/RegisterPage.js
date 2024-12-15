@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Bacground from "../features/Bacground/Bacground";
+import "../styles/log-page.css"
 
 
 
@@ -14,8 +16,16 @@ const RegisterPage = () => {
   return (
     
     <div className="auth-container">
-      <div className="background-circle circle-small"></div>
-      <div className="background-circle circle-big"></div>
+      <Bacground/>
+      <div class="contour f-right-top"></div>
+      <div class="contour f-right-bottom"></div>
+      <div class="contour s-right-top"></div>
+      <div class="contour s-right-bottom"></div>
+      <div class="contour f-left-top"></div>
+      <div class="contour f-left-bottom"></div>
+      <div class="contour s-left-top"></div>
+      <div class="contour s-left-bottom"></div>
+      
       <h1 className="app-title">SpaceMath</h1>
       <div className="auth-box">
         <form onSubmit={handleRegister}>

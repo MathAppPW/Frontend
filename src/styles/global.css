@@ -1,4 +1,4 @@
-/* Ogólne ustawienia */
+/* Ogólne ustawienia 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -10,7 +10,7 @@ body {
   height: 100vh;
   overflow: hidden;
   color: #ffffff;
-}
+}*/
 
 /* Tytuł aplikacji */
 .app-title {

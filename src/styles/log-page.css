@@ -1,0 +1,65 @@
+
+.contour{
+    position: fixed;
+    z-index: 2;
+    
+    height: 40vh;
+    width: 10px;
+
+    border-right: 4px solid white;
+    transform-origin: top;
+}
+/*prawe*/
+.f-right-top{
+    height: 35vh;
+    top: 15vh;
+    left: 30vw;
+    transform: skew(-20deg);
+}
+.f-right-bottom{
+    height: 35vh;
+    bottom: 15vh;
+    left: 30vw;
+    transform: skew(20deg);
+    transform-origin: bottom right;
+}
+
+.s-right-top{
+    top: 10vh;
+    left: 29vw;
+    transform: skew(-20deg);
+}
+.s-right-bottom{
+    bottom: 10vh;
+    left: 29vw;
+    transform: skew(20deg);
+    transform-origin: bottom right;
+}
+
+
+/*lewe*/
+.f-left-top{
+    height: 35vh;
+    top: 15vh;
+    right: 30vw;
+    transform: skew(20deg);
+}
+.f-left-bottom{
+    height: 35vh;
+    bottom: 15vh;
+    right: 30vw;
+    transform: skew(-20deg);
+    transform-origin: bottom right;
+}
+
+.s-left-top{
+    top: 10vh;
+    right: 29vw;
+    transform: skew(20deg);
+}
+.s-left-bottom{
+    bottom: 10vh;
+    right: 29vw;
+    transform: skew(-20deg);
+    transform-origin: bottom right;
+}

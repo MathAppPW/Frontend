@@ -36,7 +36,7 @@
 
 .borrder-menu{
     position: fixed;
-    z-index: 2;
+    z-index: 2.5;
     
     height: 50.05vh;
     width: 4px;
@@ -47,24 +47,27 @@
 
 .right-borrder-menu-top {
     top: 0;
-    left: 296px;
+    left: 300px;
     transform: skew(-10.3deg);
 }
 
 .right-borrder-menu-bottom {
-    top: 50vh;
-    left: 221.15px;
-     transform: skew(10.30deg);     
+    bottom: 0;
+    left: 300px;
+    transform: skew(10.30deg);   
+    transform-origin: bottom right;  
 }
+
 .left-borrder-menu-top{
     top: 0;
     right: 300px;
     transform: skew(10.3deg);
 }
 .left-borrder-menu-bottom{
-    top: 50vh;
-    right: 225px;
-     transform: skew(-10.30deg); 
+    bottom: 0;
+    right: 300px;
+    transform: skew(-10.30deg);   
+    transform-origin: bottom right;  
 }
 
 .borrder-menu::after{
@@ -94,7 +97,7 @@
     right: 100%;    
 }
 
-/*elementy menu prawa strona*/
+/*elementy menu lewa strona*/
 
 .app-title-main {
     font-family: 'Orbitron', sans-serif;
@@ -185,7 +188,7 @@
     background-color: #ae05fdc1;
 }
 
-/*elementy menu lewa strona*/
+/*elementy menu prawa strona*/
 
 .streak-main-menu-cointener{
     font-family:  'Lato', sans-serif;
@@ -196,6 +199,7 @@
     gap: 85px;
     /*gap: 75px;*/
     font-size: 18px;
+    padding-top: 20px;
 }
 .streak-main-menu{
     font-size: 22px;
@@ -215,7 +219,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 85px;
     margin-left: 70px;
 
 }
@@ -223,7 +227,7 @@
 .space-ship{
     height: 300px;
     width: 140px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 
@@ -245,6 +249,7 @@
     gap: 10px;
     color: #2bf8d6;
     font-size: larger;
+    margin-bottom: 15px;
 }
 
 .progress-bar{
@@ -259,7 +264,7 @@
 }
 
 .progress-filled{
-    height: 20px;
+    height: 15px;
     width: 80px;
     background: linear-gradient(90deg ,#2bf8d6,#ae05fdc1);
     border-top-left-radius: 5px;
