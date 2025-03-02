@@ -5,6 +5,7 @@ import App from "./App";
 import "./styles/global.css";
 import "./styles/main-manu.css" ;
 import "./components/Borders.css";
+import "./styles/system-menu.css";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);

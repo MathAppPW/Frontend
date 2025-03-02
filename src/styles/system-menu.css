@@ -1,0 +1,65 @@
+.system-content-contener {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .system-content-section {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .lesson-graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .lesson-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+  }
+  
+  .task-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border: 3px solid white;
+    background: gray;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .task-circle.clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .task-circle.clickable:hover {
+    transform: scale(1.1);
+  }
+  
+  .task-circle.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .task-circle.info {
+    background-color: red;
+    color: white;
+    font-size: 24px;
+  }
