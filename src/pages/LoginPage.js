@@ -57,6 +57,15 @@ const LoginPage = () => {
   return (
     <div className="auth-container">
       <Bacground />
+
+      <div className="contour f-right-top"></div>
+      <div className="contour f-right-bottom"></div>
+      <div className="contour s-right-top"></div>
+      <div className="contour s-right-bottom"></div>
+      <div className="contour f-left-top"></div>
+      <div className="contour f-left-bottom"></div>
+      <div className="contour s-left-top"></div>
+      <div className="contour s-left-bottom"></div>
       <h1 className="app-title">SpaceMath</h1>
       <div className="auth-box">
         <form onSubmit={handleLogin}>
