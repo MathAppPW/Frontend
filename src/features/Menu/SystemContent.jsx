@@ -106,7 +106,7 @@ const SystemMenuPage = () => {
 
       {/* Nagłówek z numerem lekcji */}
       <h2 className="main-content-section" style={{ position: "absolute", top: "12%", left: "50%", transform: "translateX(-50%)" }}>
-        Lekcja {currentLesson}
+      {currentLesson}  Pierwiastek dowolnego stopnia 
       </h2>
 
       {/* Połączenia między kółkami */}

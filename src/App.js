@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MainMenuPage from "./pages/MainMenuPage";
 import LostPassword from "./pages/LostPassword";
 import SystemMenuPage from "./pages/SystemMenuPage";
+import ExerciseSeries from "./pages/ExerciseSeries";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/menu" element={<MainMenuPage />} />
         <Route path="/system" element={<SystemMenuPage />} />
         <Route path="/forgot-password" element={<LostPassword />}/>
+        <Route path="/task" element={<ExerciseSeries/>}/>
       </Routes>
     </Router>
   );
