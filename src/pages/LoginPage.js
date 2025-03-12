@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 
@@ -7,7 +7,35 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [accessToken, setAccessToken] = useState("");
+
+  // Function to check token validity
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) return; // No token, user needs to log in
+
+    try {
+      const response = await fetch(`/User/test`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        navigate("/menu"); // User is authenticated, navigate to menu
+      } else {
+        localStorage.removeItem("accessToken"); // Token invalid, remove it
+      }
+    } catch (error) {
+      console.error("Error verifying token:", error);
+    }
+  };
+
+  useEffect(() => {
+    checkAuthStatus(); // Run this when the component mounts
+  }, []);
 
   const isValidPassword = (password) => {
     const passwordRegex =
@@ -41,8 +69,7 @@ const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setAccessToken(data.accessToken);
-        console.log("Access Token:", data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken); // Save token
         setErrorMessage("");
         navigate("/menu");
       } else {
