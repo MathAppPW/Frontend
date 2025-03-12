@@ -7,18 +7,32 @@ function LeftBarMainMenu(props) {
   const handleLogout = async () => {
     const token = localStorage.getItem("accessToken");
 
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
     try {
       const response = await fetch(`/User/logout`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
-        navigate("/"); 
+        localStorage.removeItem("accessToken");
+        navigate("/");
       } else {
         console.error("Logout failed:", response.statusText);
+        localStorage.removeItem("accessToken");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error during logout:", error);
+      localStorage.removeItem("accessToken");
+      navigate("/");
     }
   };
 

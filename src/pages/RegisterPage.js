@@ -1,19 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import "../styles/log-page.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [accessToken, setAccessToken] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) return;
+
+    try {
+      const response = await fetch(`/User/test`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        navigate("/menu");
+      } else {
+        localStorage.removeItem("accessToken");
+      }
+    } catch (error) {
+      console.error("Error verifying token:", error);
+    }
+  };
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
 
   const isValidPassword = (password) => {
     const passwordRegex =
@@ -28,7 +52,6 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
 
     if (username.length < 8) {
       setErrorMessage("Nazwa użytkownika musi mieć co najmniej 8 znaków.");
@@ -63,8 +86,7 @@ const RegisterPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setAccessToken(data.accessToken);
-        console.log("Access Token:", data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
         setErrorMessage("");
         navigate("/menu");
       } else {
