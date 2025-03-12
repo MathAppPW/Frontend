@@ -44,7 +44,8 @@ const MainMenuPage = () => {
         className={`main-content-arrow main-content-up-arrow ${currentSection === 1 ? "hidden" : ""}`}
         onClick={currentSection > 1 ? () => handleScroll("up") : undefined}
         />
-            <h2 className="main-content-section">Sekcja {currentSection}</h2>
+            <h2 className="main-content-section">LICZBY
+            RZECZYWISTE {currentSection}</h2>
             <img
             className="main-content-galactic"
             src={Galactic}
