@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LeftBarMainMenu from "../features/Menu/LeftBarMainMenu";
 import FavoriteAlien from "../assets/images/Favorite_Alien.png";
 import RightBarMainMenu from "../features/Menu/RightBarMainMenu";
-import SystemContent from "../features/Menu/SystemContent";
+import MainContent from "../features/Menu/MainContent";
 
 const MainMenuPage = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const MainMenuPage = () => {
   return (
     <>
       <LeftBarMainMenu username="purple-alien" profilePicture={FavoriteAlien} />
-      <SystemContent />
+      <MainContent />
       <RightBarMainMenu motto="Tak trzymaj!" streak="115" level="12" />
     </>
   );

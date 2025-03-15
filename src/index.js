@@ -7,6 +7,7 @@ import "./styles/main-manu.css" ;
 import "./styles/exercise-series.css" ;
 import "./components/Borders.css";
 import "./styles/system-menu.css";
+import "./styles/profile-page.css";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
