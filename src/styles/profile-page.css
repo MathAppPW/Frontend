@@ -139,17 +139,98 @@
 /* Style dla przycisków */
 .profile-change-button {
     background-color: #ad15f3;
+    font-family: 'Orbitron', sans-serif;
     color: white;
-    border: none;
-    padding: 10px 15px;
+    font-size: 1.6vh;
+    text-align: center;
+    height: calc(min(4vh, 40px));
+    width: calc(min(10vw, 200px));
+    border: 2px solid white;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    box-shadow: none;
+    margin-top: 10px;
+}
+
+.profile-save-button {
+    background-color: #ad15f3;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: 1.6vh;
+    text-align: center;
+    height: calc(min(4vh, 40px));
+    width: calc(min(10vw, 200px));
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: none;
     margin-top: 10px;
 }
 
 .profile-button:hover {
     background-color: #ae05fdc1;
+}
+
+.edit-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px 0;
+}
+
+.edit-label {
+    font-size: 1.8vh;
+    color: white;
+}
+
+.edit-button {
+    background-color: #ad15f3;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: 1.6vh;
+    text-align: center;
+    height: 4vh;
+    width: 7vw;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: none;
+    margin-left: auto;
+}
+
+.edit-button:hover {
+    background-color: #ae05fdc1;
+}
+
+.save-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.delete-section {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 2px solid white;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    text-align: center;
+}
+
+.delete-section h2 {
+    font-size: 2.6vh;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.delete-section p {
+    font-size: 1.8vh;
+    color: white;
 }
 
 .delete-button {
@@ -167,18 +248,44 @@
     background-color: darkred;
 }
 
-.confirm-input {
-    width: 80%;
-    padding: 5px;
-    margin: 10px 0;
+
+.confirmation-popup {
+    text-align: center;
+    padding: 10px;
 }
+
+.confirmation-popup p {
+    font-size: 1.8vh;
+    color: white;
+    margin-top: 10px;
+}
+
+.confirm-input {
+    width: calc(100% - 40px);
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 1.6vh;
+    text-align: center;
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+}
+
+.profile-change-button, .delete-button {
+    width: 80%;
+    margin-top: 10px;
+}
+
 
 .avatar-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 kolumn w rzędzie */
-    gap: 15px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
     justify-content: center;
-    padding: 10px;
+    height: calc(min(40vh, 30vw));
+    width: calc(min(50vw, 800px));
 }
 
 .avatar-box {
@@ -188,7 +295,6 @@
     justify-content: center;
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
-    
 }
 
 .avatar-box:hover {
@@ -196,16 +302,17 @@
 }
 
 .avatar-image {
-    width: 80px;
-    height: 80px;
+    width: calc(min(15vh, 9vw));
+    height: calc(min(15vh, 9vw));
     object-fit: cover;
     border-radius: 5%;
     border: none;
     margin-bottom: 6px;
+    margin-top: 6px;
 }
 
 .avatar-name {
-    margin-top: 5px;
+    margin-top: 6px;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
@@ -214,9 +321,10 @@
 
 .ship-container {
     display: flex;
+    gap: 30px;
     justify-content: center;
-    gap: 20px;
-    padding: 15px;
+    height: calc(min(40vh, 30vw));
+    width: calc(min(50vw, 800px));
 }
 
 .ship-box {
@@ -233,13 +341,14 @@
 }
 
 .ship-image {
-    width: 120px;
+    width: calc(min(8vw, 135px));
     height: auto;
     object-fit: contain;
     margin-bottom: 6px;
 }
 
 .ship-name {
+    margin-top: 15px;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
