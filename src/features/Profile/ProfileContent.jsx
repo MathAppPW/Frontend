@@ -63,30 +63,49 @@ const ProfileContent = () => {
       
       {/* Popup Edycji Konta */}
       {isEditOpen && (
-        <Popup title="Edycja konta" onClose={() => setEditOpen(false)} width="400px" height="auto">
-          <p>Nazwa użytkownika: username <button className="edit-button">Edytuj</button></p>
-          <p>Adres e-mail: useremail <button className="edit-button">Edytuj</button></p>
-          <p>Hasło <button className="edit-button">Edytuj</button></p>
-          <button className="profile-change-button">Zapisz zmiany</button>
-          <button className="profile-change-button">Cofnij</button>
-          <hr />
-          <button className="delete-button" onClick={() => setDeleteConfirmOpen(true)}>Usuń konto</button>
+        <Popup title="Edycja konta" onClose={() => setEditOpen(false)} width="400px">
+          <div className="edit-field">
+            <span className="edit-label">Nazwa użytkownika:</span>
+            <button className="edit-button">Edytuj</button>
+          </div>
+          <div className="edit-field">
+            <span className="edit-label">Adres e-mail:</span>
+            <button className="edit-button">Edytuj</button>
+          </div>
+          <div className="edit-field">
+            <span className="edit-label">Hasło:</span>
+            <button className="edit-button">Edytuj</button>
+          </div>
+
+          <div className="save-buttons">
+            <button className="profile-save-button">Zapisz zmiany</button>
+            <button className="profile-save-button">Cofnij</button>
+          </div>
+
+          <div className="delete-section">
+            <h2>Usunięcie konta</h2>
+            <p>Usuwasz konto na własną odpowiedzialność, stracisz cały postęp.</p>
+            <button className="delete-button" onClick={() => setDeleteConfirmOpen(true)}>Usuń konto</button>
+          </div>
         </Popup>
       )}
 
       {/* Popup Potwierdzenia Usunięcia Konta */}
       {isDeleteConfirmOpen && (
         <Popup title="Na pewno chcesz usunąć konto?" onClose={() => setDeleteConfirmOpen(false)} width="350px">
-          <button className="profile-change-button">NIE</button>
-          <p>By usunąć konto wpisz "POTWIERDZAM":</p>
-          <input type="text" className="confirm-input" />
-          <button className="delete-button">Usuń konto</button>
+          <div className="confirmation-popup">
+            <button className="profile-change-button">NIE</button>
+            <p>By usunąć konto wpisz <strong>"POTWIERDZAM"</strong>, a następnie kliknij przycisk poniżej.</p>
+            <input type="text" className="confirm-input" placeholder="PO..." />
+            <button className="delete-button">Usuń konto</button>
+          </div>
         </Popup>
       )}
 
+
       {/* Popup Zmiany Awatara */}
       {isAvatarOpen && (
-        <Popup title="Zmiana awatara" onClose={() => setAvatarOpen(false)} width="600px">
+        <Popup title="Zmiana awatara" onClose={() => setAvatarOpen(false)}>
             <div className="avatar-container">
             {Object.entries(avatars).map(([name, src]) => (
                 <div key={name} className="avatar-box">
@@ -95,14 +114,14 @@ const ProfileContent = () => {
                 </div>
             ))}
             </div>
-            <button className="profile-change-button">Zapisz zmiany</button>
+            <button className="profile-save-button">Zapisz zmiany</button>
         </Popup>
         )}
 
 
       {/* Popup Zmiany Statku */}
       {isShipOpen && (
-        <Popup title="Zmiana statku" onClose={() => setShipOpen(false)} width="700px">
+        <Popup title="Zmiana statku" onClose={() => setShipOpen(false)}>
             <div className="ship-container">
             {Object.entries(ships).map(([name, src]) => (
                 <div key={name} className="ship-box">
@@ -111,7 +130,7 @@ const ProfileContent = () => {
                 </div>
             ))}
             </div>
-            <button className="profile-change-button">Zapisz zmiany</button>
+            <button className="profile-save-button">Zapisz zmiany</button>
         </Popup>
         )}
     </div>
