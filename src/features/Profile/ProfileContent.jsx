@@ -63,45 +63,46 @@ const ProfileContent = () => {
       
       {/* Popup Edycji Konta */}
       {isEditOpen && (
-        <Popup title="Edycja konta" onClose={() => setEditOpen(false)} width="400px">
-          <div className="edit-field">
-            <span className="edit-label">Nazwa użytkownika:</span>
-            <button className="edit-button">Edytuj</button>
-          </div>
-          <div className="edit-field">
-            <span className="edit-label">Adres e-mail:</span>
-            <button className="edit-button">Edytuj</button>
-          </div>
-          <div className="edit-field">
-            <span className="edit-label">Hasło:</span>
-            <button className="edit-button">Edytuj</button>
-          </div>
-
-          <div className="save-buttons">
-            <button className="profile-save-button">Zapisz zmiany</button>
-            <button className="profile-save-button">Cofnij</button>
-          </div>
-
-          <div className="delete-section">
-            <h2>Usunięcie konta</h2>
-            <p>Usuwasz konto na własną odpowiedzialność, stracisz cały postęp.</p>
-            <button className="delete-button" onClick={() => setDeleteConfirmOpen(true)}>Usuń konto</button>
+        <Popup title="Edycja konta" onClose={() => setEditOpen(false)}>
+          <div className="edit-popup">
+            <div className="edit-field">
+              <span className="edit-label">Nazwa użytkownika:</span>
+              <button className="edit-button">Edytuj</button>
+            </div>
+            <div className="edit-field">
+              <span className="edit-label">Adres e-mail:</span>
+              <button className="edit-button">Edytuj</button>
+            </div>
+            <div className="edit-field">
+              <span className="edit-label">Hasło:</span>
+              <button className="edit-button">Edytuj</button>
+            </div>
+            <div className="save-buttons">
+              <button className="profile-save-button">Zapisz zmiany</button>
+              <button className="profile-save-button">Cofnij</button>
+            </div>
+            <div className="delete-section">
+              <h2>Usunięcie konta</h2>
+              <p>Usuwasz konto na własną odpowiedzialność, stracisz cały postęp.</p>
+              <button className="delete-button" onClick={() => setDeleteConfirmOpen(true)}>Usuń konto</button>
+            </div>
           </div>
         </Popup>
       )}
 
       {/* Popup Potwierdzenia Usunięcia Konta */}
       {isDeleteConfirmOpen && (
-        <Popup title="Na pewno chcesz usunąć konto?" onClose={() => setDeleteConfirmOpen(false)} width="350px">
+        <Popup title="Czy usunąć?" onClose={() => setDeleteConfirmOpen(false)}>
           <div className="confirmation-popup">
-            <button className="profile-change-button">NIE</button>
+            <div className="confirmation-buttons">
+              <button className="profile-change-button">NIE</button>
+            </div>
             <p>By usunąć konto wpisz <strong>"POTWIERDZAM"</strong>, a następnie kliknij przycisk poniżej.</p>
-            <input type="text" className="confirm-input" placeholder="PO..." />
+            <input type="text" className="confirm-input" />
             <button className="delete-button">Usuń konto</button>
           </div>
         </Popup>
       )}
-
 
       {/* Popup Zmiany Awatara */}
       {isAvatarOpen && (

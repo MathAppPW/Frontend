@@ -121,6 +121,13 @@
     position: relative;
 }
 
+.popup-container h2 {
+    font-family: 'Orbitron', sans-serif;
+    white-space: initial;
+    width: 70%;
+    margin-left: 15%;
+}
+
 .popup-close {
     position: absolute;
     top: 10px;
@@ -171,12 +178,17 @@
     background-color: #ae05fdc1;
 }
 
+.edit-popup {
+    width: 20vw;
+    height: auto;
+}
+
 .edit-field {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 5px 0;
+    height: 8vh;
 }
 
 .edit-label {
@@ -220,27 +232,32 @@
 }
 
 .delete-section h2 {
-    font-size: 2.6vh;
+    margin-top: 1.5vh;
+    font-size: 26px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 3vh;
     color: white;
     text-transform: none;
     letter-spacing: normal;
 }
 
 .delete-section p {
+    width: 80%;
+    margin-left: 10%;
     font-size: 1.8vh;
     color: white;
+    margin-bottom: 2vh;
 }
 
 .delete-button {
     background-color: red;
     color: white;
-    border: none;
-    padding: 10px 15px;
+    border: 2px solid white;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1.6vh;
+    height: 4vh;
+    width: calc(max(40%, 80px));
     margin-top: 10px;
 }
 
@@ -248,36 +265,54 @@
     background-color: darkred;
 }
 
-
 .confirmation-popup {
-    text-align: center;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
 }
 
 .confirmation-popup p {
-    font-size: 1.8vh;
+    font-size: min(2vh, 16px);
     color: white;
-    margin-top: 10px;
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .confirm-input {
-    width: calc(100% - 40px);
-    padding: 8px;
-    margin: 10px 0;
-    font-size: 1.6vh;
+    width: 80%;
+    height: 3.5vh;
+    font-size: min(1.8vh, 16px);
     text-align: center;
     border: 2px solid white;
     background-color: transparent;
     color: white;
     border-radius: 5px;
     outline: none;
+    margin-bottom: 10px;
+}
+
+.confirmation-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max(10vw, 70px);
+    height: 5vh;
+    font-size: 1.6vh;
 }
 
 .profile-change-button, .delete-button {
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+.profile-change-button {
     width: 80%;
     margin-top: 10px;
 }
-
 
 .avatar-container {
     display: grid;
@@ -318,7 +353,6 @@
     text-align: center;
 }
 
-
 .ship-container {
     display: flex;
     gap: 30px;
@@ -341,7 +375,7 @@
 }
 
 .ship-image {
-    width: calc(min(8vw, 135px));
+    width: calc(min(8vw, 135px, 15vh));
     height: auto;
     object-fit: contain;
     margin-bottom: 6px;
