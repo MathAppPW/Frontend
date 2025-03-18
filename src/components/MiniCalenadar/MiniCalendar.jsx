@@ -10,6 +10,7 @@ function MiniCalendar() {
   const markedRanges = [
     { start: new Date(2024, 11, 3), end: new Date(2024, 11, 3) },
     { start: new Date(2024, 11, 6), end: new Date(2024, 11, 10) },
+    { start: new Date(2025, 2, 10), end: new Date(2025, 2, 15) },
   ];
 
   // Funkcja do sprawdzania, czy dzień jest w zaznaczonym zakresie
