@@ -1,19 +1,28 @@
 import React, { useEffect, useRef } from "react";
 import "./background.css";
 
-function Bacground() {
-  const sceneRef = useRef(null); // Referencja do elementu .scene
+function Background() {
+  const sceneRef = useRef(null);
 
   useEffect(() => {
-    const scene = sceneRef.current; // Bezpośredni dostęp do elementu
+    const scene = sceneRef.current;
     if (scene) {
-      // Tworzenie 210 <div>
-      for (let i = 0; i < 210; i++) {
+      for (let i = 0; i < 180; i++) {
         const div = document.createElement("div");
+
+        // Dodaj losowy rozmiar
+        const rand = Math.random();
+        if (rand < 0.33) {
+          div.className = "small-star";
+        } else if (rand < 0.66) {
+          div.className = "medium-star";
+        } else {
+          div.className = "large-star";
+        }
+
         scene.appendChild(div);
       }
 
-      // Pobieranie wszystkich <div> stworzonych w .scene
       const stars = scene.querySelectorAll("div");
       stars.forEach((star) => {
         let x = `${Math.random() * 200}vmax`;
@@ -21,22 +30,18 @@ function Bacground() {
         let z = `${Math.random() * 100}vmin`;
         let rx = `${Math.random() * 360}deg`;
 
-        star.style.setProperty('--x', x);
-        star.style.setProperty('--y', y);
-        star.style.setProperty('--z', z);
-        star.style.setProperty('--rx', rx);
+        star.style.setProperty("--x", x);
+        star.style.setProperty("--y", y);
+        star.style.setProperty("--z", z);
+        star.style.setProperty("--rx", rx);
 
         let delay = `${Math.random() * 1.5}s`;
         star.style.animationDelay = delay;
       });
     }
-  }, []); // Wykona się tylko raz po zamontowaniu komponentu
+  }, []);
 
-  return (
-    <>
-      <div className="scene" ref={sceneRef}></div> {/* Kontener dla divów */}
-    </>
-  );
+  return <div className="scene" ref={sceneRef}></div>;
 }
 
-export default Bacground;
+export default Background;

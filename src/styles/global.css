@@ -35,14 +35,15 @@ body {
 /* Box logowania */
 .auth-box {
   margin: 0;
-  background-color: #1a084e;
+  background-color: #1b065b;
   border-radius: 12px;
-  padding: 20px;
+  padding: 3vh;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  width: 420px;
+  width: 23vw;
   text-align: center;
   border: 3px solid #ffffff;
   position: relative;
+  gap:5vh;
 }
 
 .auth-box::after {
@@ -64,7 +65,8 @@ body {
 .auth-input {
   width: 85%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 2.3vh;
+  margin-top: 1.1vh;
   border: 2px solid #ffffff;
   border-radius: 8px;
   background: #160c6f;
@@ -100,16 +102,16 @@ body {
 }
 
 .auth-links {
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 2vh;
+  font-size: 1.2vh;
 }
 
 .auth-links a {
   display: block;
   color: #ffffff;
   text-decoration: none;
-  margin-top: 5px;
-  margin-bottom: 8px;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 
 .auth-links a:hover {

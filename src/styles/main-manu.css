@@ -3,7 +3,7 @@
 .bar-main-menu{
     background-color:  #1a084e;;
     height: 100vh;
-    width: 300px;
+    width: 20vw;
     position: fixed;
     top: 0;
     z-index: 3;
@@ -48,26 +48,26 @@
 
 .right-borrder-menu-top {
     top: 0;
-    left: 300px;
-    transform: skew(-10.3deg);
+    left: 20vw;
+    transform: skew(-11deg);
 }
 
 .right-borrder-menu-bottom {
     bottom: 0;
-    left: 300px;
-    transform: skew(10.30deg);   
+    left: 20vw;
+    transform: skew(11deg);   
     transform-origin: bottom right;  
 }
 
 .left-borrder-menu-top{
     top: 0;
-    right: 300px;
-    transform: skew(10.3deg);
+    right: 20vw;
+    transform: skew(11deg);
 }
 .left-borrder-menu-bottom{
     bottom: 0;
-    right: 300px;
-    transform: skew(-10.30deg);   
+    right: 20vw;
+    transform: skew(-11deg);   
     transform-origin: bottom right;  
 }
 
@@ -102,9 +102,9 @@
 
 .app-title-main {
     font-family: 'Orbitron', sans-serif;
-    font-size: 36px;
-    margin-top: 15px;
-    margin-left: 20px;
+    font-size: 5vh;
+    margin-top: 2vh;
+    margin-left: 0.7vw;
     color: white;
   }
 
@@ -113,45 +113,45 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 35px;
-    margin-right: 95px;
+    margin-top: 4vh;
+    margin-right: 4.5vw;
     
 }
 .profile-picture{
-    height: 125px;
-    width: 125px;
+    height: 12vh;
+    width: 12vh;
 }
 
 .user-name{
     font-family: 'Orbitron', sans-serif;
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 1vh;
+    font-size: 1.8vh;
     color: white;
 }
 
 .button-container-main-menu{
-    margin-top: 40px;
+    margin-top: 9vh;
     display: flex;
     justify-content: left;
     align-items: left;
     flex-direction: column;
-    margin-left: 15px;
+    margin-left: 2vw;
 }
 .button-main-menu{
 
     background-color: #1a084e;
     font-family: 'Orbitron', sans-serif;
     color: white;
-    font-size: 16px;
+    font-size: 1.9vh;
     text-align: left;
 
-    margin-top: 10px;
-    padding: 10px 10px;
-    padding-left: 20px;
-    width: 180px;
+    margin-top: 1.5vh;
+    padding: 0.6vh 0.6vw;
+    padding-left: 1vw;
+    width: 12vw;
 
-    border: 2px solid hsla(0, 0%, 80%, 0.53);
-    border-radius: 8px;
+    border: 0.2vh solid hsla(0, 0%, 80%, 0.87);
+    border-radius: 0.6vh;
     cursor: pointer;
     box-shadow: none;
 }
@@ -162,8 +162,8 @@
 }
 
 .material-icons{
-    margin-right: 10px;
-    font-size: 24px;
+    margin-right: 0.3vw;
+    font-size: 2vh;
     vertical-align: text-bottom;
 }
 
@@ -171,13 +171,13 @@
     background-color: #ad15f3;
     font-family: 'Orbitron', sans-serif;
     color: white;
-    font-size: 14px;
+    font-size: 1.3vh;
     text-align: center;
 
-    margin-top: 170px;
-    margin-left: 45px;
+    margin-top: 30vh;
+    margin-left: 4vw ;
     padding: 8px 10px;
-    width: 120px;
+    width: 7vw;
 
     border: 2px solid white;
     border-radius: 5px;
@@ -197,49 +197,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 85px;
+    gap: 8.5vw;
     /*gap: 75px;*/
-    font-size: 18px;
-    padding-top: 20px;
+    font-size: 2vh;
+    padding-top: 2vh;
 }
 .streak-main-menu{
-    font-size: 22px;
+    font-size: 2vh;
     font-weight: bolder;
     color: #FB773C;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 7px;
+    gap: 1vh;
 }
 .fire{
-    width: 15px;
-    height: 20px;
+    width: 1.5vh;
+    height: 2vh;
 }
 .spaceship-main-menu-container{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 85px;
-    margin-left: 70px;
+    margin-top: 12vh;
+    margin-left: 4vw;
 
 }
 
 .space-ship{
-    height: 300px;
-    width: 140px;
-    margin-bottom: 35px;
+    height: 33vh;
+    width: 9vw;
+    margin-bottom: 3vh;
 }
 
 
 .icon-heart-full {
-    color: #FF4C8B;
-    font-size: 48px;
+    color: #FF4C8B !important;
+    font-size: 3vh !important;
   }
 
 .icon-heart-empty{
-    color: #FF4C8B;
-    font-size: 48px;
+    color: #FF4C8B !important;
+    font-size: 3vh !important;
 }
 
 .progress-container{
@@ -247,29 +247,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 0.5vw;
     color: #2bf8d6;
     font-size: larger;
-    margin-bottom: 15px;
+    margin-bottom: 1vh;
+    margin-top: 1.5vh;
 }
 
 .progress-bar{
     display: flex;
     justify-content: right;
     align-items: right;
-    height: 20px;
-    width: 120px;
+    height: 2.5vh;
+    width: 7vw;
     border: 3px solid #2bf8d6;
     background-color: #2bf8d652;
-    border-radius: 5px;
+    border-radius: 0.7vh;
 }
 
 .progress-filled{
-    height: 15px;
-    width: 80px;
+    height: 2.05vh;
+    width: 3vw;
     background: linear-gradient(90deg ,#2bf8d6,#ae05fdc1);
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 0.7vh;
+    border-bottom-left-radius: 0.7vh;
 }
 
 /* środek menu */
