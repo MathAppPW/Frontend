@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile, setUserName } from "../../src/store/reducer.jsx";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -11,6 +14,8 @@ const LoginPage = () => {
   // Function to check token validity
   const checkAuthStatus = async () => {
     const token = localStorage.getItem("accessToken");
+   
+    
 
     if (!token) return; // No token, user needs to log in
 
@@ -24,6 +29,12 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
+       
+        await dispatch(fetchUserProfile());
+        dispatch(setUserName(username));
+        console.log("Nazwa");
+        localStorage.setItem("username", "Kornelia");
+
         navigate("/menu"); // User is authenticated, navigate to menu
       } else {
         localStorage.removeItem("accessToken"); // Token invalid, remove it
@@ -71,6 +82,12 @@ const LoginPage = () => {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken); // Save token
         setErrorMessage("");
+   
+        await dispatch(fetchUserProfile());
+        dispatch(setUserName(username));
+        localStorage.setItem("username", "Kornelia");
+
+        console.log("Nazwa");
         navigate("/menu");
       } else {
         const errorData = await response.json();

@@ -1,12 +1,12 @@
 .mini-calendar {
-    margin-top: 60px;
-    width: 210px;
-    margin-left: 65px;
+    margin-top: 11.5vh;
+    width: 23vh;
+    margin-left: 6vw;
     background-color: #02b49635;
     border: 3px solid #FF4C8B;
     border-radius: 10px;
     font-family: 'Lato', sans-serif;
-    padding: 5px;
+    padding: 0.9vh;
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
@@ -16,17 +16,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: 1.5vh;
     color: #FF4C8B;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 1.2vh;
+    margin-top: 0.7vh;
   }
   
   .calendar-header button {
     background: none;
     border: none;
     color: #FF4C8B;
-    font-size: 16px;
+    font-size: 1.5vh;
     font-weight: bold;
     cursor: pointer;
   }
@@ -34,7 +35,7 @@
   .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    font-size: 12px;
+    font-size: 1.2vh;
     color: #FF4C8B;
     margin-bottom: 4px;
   }
@@ -57,7 +58,7 @@
     border-radius: 5px;
     color: #FFFFFF;
     background-color: transparent;
-    font-size: 12px;
+    font-size: 1.2vh;
     position: relative;
   }
   

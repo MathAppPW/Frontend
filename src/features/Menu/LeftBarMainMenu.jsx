@@ -1,11 +1,38 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+
+import profile0 from '../../assets/images/ProfileImages/0.png';
+import profile1 from '../../assets/images/ProfileImages/0.png';
+import profile2 from '../../assets/images/ProfileImages/0.png';
+import profile3 from '../../assets/images/ProfileImages/0.png';
+import profile4 from '../../assets/images/ProfileImages/0.png';
+import profile5 from '../../assets/images/ProfileImages/0.png';
+import profile6 from '../../assets/images/ProfileImages/0.png';
+import profile7 from '../../assets/images/ProfileImages/0.png';
+import profile8 from '../../assets/images/ProfileImages/0.png';
+import profile9 from '../../assets/images/ProfileImages/0.png';
+
+
+
 
 function LeftBarMainMenu(props) {
   const navigate = useNavigate();
+  const username = useSelector((state) => state.userName);
+  const profilePicture = useSelector((state) => state.profilePicture);
+
+  const profileImages = {
+    0: profile0,
+    1: profile1,
+    2: profile2,
+    3: profile3,
+    4: profile4,
+  };
+
 
   const handleLogout = async () => {
     const token = localStorage.getItem("accessToken");
+
 
     if (!token) {
       navigate("/");
@@ -47,8 +74,8 @@ function LeftBarMainMenu(props) {
         <h1 className="app-title-main">SpaceMath</h1>
 
         <div className="profile">
-          <img src={props.profilePicture} className="profile-picture" alt="Profile" />
-          <p className="user-name">{props.username}</p>
+          <img src={profileImages[profilePicture]} className="profile-picture" alt="Profile" />
+          <p className="user-name">{username}</p>
         </div>
 
         <div className="button-container-main-menu">

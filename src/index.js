@@ -9,11 +9,16 @@ import "./components/Borders.css";
 import "./styles/system-menu.css";
 import "./styles/profile-page.css";
 
+import { Provider } from "react-redux";
+import store from "./store/store.jsx";
+
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>
 );

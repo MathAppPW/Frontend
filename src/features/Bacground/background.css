@@ -6,7 +6,7 @@
 
 body{
     /*background-color: black;*/
-    background: radial-gradient(circle at bottom, navy 0, black 100%);
+    background: radial-gradient(circle at bottom, rgb(1, 1, 120) ,rgb(13, 13, 110) ,rgb(9, 9, 49) , black 100%);
     opacity: 1;
     color: #ffffff;
     font-family: Arial, sans-serif;
@@ -31,9 +31,8 @@ body{
     perspective: 50vmin; 
 }
 
-.scene div{
-    width: 1.5vmin;
-    height: 1.5vmin;
+.scene div {
+    height: 1.1vmin; /* stała wysokość dla wszystkich */
     transform: translateZ(-100vmin) rotateY(90deg) rotateX(var(--rx)) translateZ(var(--x)) scaleX(1);
     position: absolute;
     top: 0%;
@@ -41,8 +40,27 @@ body{
     animation: animate 1.5s infinite ease-in;
     background: white;
     filter: drop-shadow(0 0 2px #ad15f3);
-    /*box-shadow: 0 0 20px red;*/
-}
+    border-radius: 3px;
+  }
+  
+  /* Proporcjonalna różnica tylko w grubości (szerokość) */
+  .small-star {
+    width: 0.4vmin;
+    height: 0.6vmin; 
+    opacity: 0.4;
+  }
+  
+  .medium-star {
+    width: 0.7vmin;
+    height: 1.2vmin; 
+    opacity: 0.7;
+  }
+  
+  .large-star {
+    width: 0.7vmin;
+    height: 1.6vmin; 
+    opacity: 0.9;
+  }
 
 @keyframes animate {
     0%, 90% {
