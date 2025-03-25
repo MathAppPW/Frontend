@@ -332,3 +332,25 @@
   opacity: 0;
   pointer-events: none;
 }
+
+/*znajomi*/
+
+.list-of-friends-container{
+    height: 90vh;
+    width: 50vw;
+    background-color: hsla(276, 85%, 36%, 0.241);
+    border: solid 0.15vh white;
+    border-radius: 2.5vh;
+    box-shadow: 0.2vh 0.2vh 2vh rgba(255, 255, 255, 0.216);
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    padding: 2vh;
+    padding-left: 2vw;
+}
+.header-list-of-friends{
+    font-size: 3vh;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}

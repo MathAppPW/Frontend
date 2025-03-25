@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile, setUserName } from "./store/reducer.jsx";
 import { useEffect } from "react";
+import Friends from "./pages/Friends.jsx";
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/forgot-password" element={<LostPassword />}/>
         <Route path="/task" element={<ExerciseSeries/>}/>
         <Route path="/profile" element={<ProfilePage/>}/>
+        <Route path="/friends" element={<Friends/>}/>
       </Routes>
     </Router>
   );

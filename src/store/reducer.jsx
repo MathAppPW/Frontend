@@ -1,6 +1,7 @@
 const initialState = {
-  userName: 'Kornelia',         
-  rocketSkin: 0,
+  userName: 'Kornelia', 
+  profilePicture: null,        
+  rocketSkin: null,
   level: 1,
   lives: 5,
   experience: 0,
