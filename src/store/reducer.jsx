@@ -1,6 +1,5 @@
 const initialState = {
-  userName: 'Kornelia',         // tu możesz trzymać cały obiekt jeśli chcesz
-  profilePicture: 0,
+  userName: 'Kornelia',         
   rocketSkin: 0,
   level: 1,
   lives: 5,
