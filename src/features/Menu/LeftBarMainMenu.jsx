@@ -85,7 +85,7 @@ function LeftBarMainMenu(props) {
           <button className="button-main-menu">
             <span className="material-icons">leaderboard</span> Ranking
           </button>
-          <button className="button-main-menu">
+          <button className="button-main-menu" onClick={() => navigate("/friends")}>
             <span className="material-icons">group</span> Znajomi
           </button>
           <button onClick={() => navigate("/profile")} className="button-main-menu">
