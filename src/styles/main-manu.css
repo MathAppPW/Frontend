@@ -48,25 +48,25 @@
 
 .right-borrder-menu-top {
     top: 0;
-    left: 20vw;
+    left: 20.1vw;
     transform: skew(-11deg);
 }
 
 .right-borrder-menu-bottom {
     bottom: 0;
-    left: 20vw;
+    left: 20.1vw;
     transform: skew(11deg);   
     transform-origin: bottom right;  
 }
 
 .left-borrder-menu-top{
     top: 0;
-    right: 20vw;
+    right: 20.2vw;
     transform: skew(11deg);
 }
 .left-borrder-menu-bottom{
     bottom: 0;
-    right: 20vw;
+    right: 20.2vw;
     transform: skew(-11deg);   
     transform-origin: bottom right;  
 }
@@ -174,7 +174,7 @@
     font-size: 1.3vh;
     text-align: center;
 
-    margin-top: 30vh;
+    margin-top: 27vh;
     margin-left: 4vw ;
     padding: 8px 10px;
     width: 7vw;
@@ -281,12 +281,15 @@
     align-items: center;
     flex-direction: column;
     font-family: 'Orbitron', sans-serif;
+    font-size: 3vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
     
 }
 .main-content-arrow{
     background-color: white;
-    width: 70px;
-    height: 70px;
+    width: 7vh;
+    height: 7vh;
 }
 .main-content-up-arrow{
     clip-path: polygon(0% 50%,
@@ -298,18 +301,20 @@
 				  0% 50%);
  }
  .main-content-section{
-    margin-top: 0px;
+    margin-top: 2vh;
  }
  .main-content-galactic{
-    width: 400px;
-    height: 400px;
-    margin-top: 70px;
-    margin-bottom: 70px;
+    width: 40vw;
+    height: 80vh;
+    margin-top: -5vh;
+    margin-bottom: -5vh;
 
  }
 
  .main-content-number{
-    margin-bottom: 0px;
+    margin-top: -7.5vh;
+    margin-bottom: 7.5vh;
+    font-size: 3.4vh;
  }
 
  .main-content-down-arrow{

@@ -45,18 +45,21 @@ body{
   
   /* Proporcjonalna różnica tylko w grubości (szerokość) */
   .small-star {
-    width: 0.2vmin;
+    width: 0.4vmin;
+    height: 0.6vmin; 
     opacity: 0.4;
   }
   
   .medium-star {
-    width: 0.3vmin;
+    width: 0.7vmin;
+    height: 1.2vmin; 
     opacity: 0.7;
   }
   
   .large-star {
-    width: 0.6vmin;
-    opacity: 1;
+    width: 0.7vmin;
+    height: 1.6vmin; 
+    opacity: 0.9;
   }
 
 @keyframes animate {

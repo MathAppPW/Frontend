@@ -7,8 +7,23 @@ import LostPassword from "./pages/LostPassword";
 import SystemMenuPage from "./pages/SystemMenuPage";
 import ExerciseSeries from "./pages/ExerciseSeries";
 import ProfilePage from "./pages/ProfilePage";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile, setUserName } from "./store/reducer.jsx";
+import { useEffect } from "react";
+
 
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      dispatch(fetchUserProfile());
+    }
+  }, []);
+
   return (
     <Router>
       <Routes>
