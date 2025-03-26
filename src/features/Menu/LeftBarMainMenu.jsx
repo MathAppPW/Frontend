@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 import profile0 from '../../assets/images/ProfileImages/0.png';
-import profile1 from '../../assets/images/ProfileImages/0.png';
-import profile2 from '../../assets/images/ProfileImages/0.png';
-import profile3 from '../../assets/images/ProfileImages/0.png';
-import profile4 from '../../assets/images/ProfileImages/0.png';
-import profile5 from '../../assets/images/ProfileImages/0.png';
-import profile6 from '../../assets/images/ProfileImages/0.png';
-import profile7 from '../../assets/images/ProfileImages/0.png';
-import profile8 from '../../assets/images/ProfileImages/0.png';
-import profile9 from '../../assets/images/ProfileImages/0.png';
+import profile1 from '../../assets/images/ProfileImages/1.png';
+import profile2 from '../../assets/images/ProfileImages/2.png';
+import profile3 from '../../assets/images/ProfileImages/3.png';
+import profile4 from '../../assets/images/ProfileImages/4.png';
+import profile5 from '../../assets/images/ProfileImages/5.png';
+import profile6 from '../../assets/images/ProfileImages/6.png';
+import profile7 from '../../assets/images/ProfileImages/7.png';
+import profile8 from '../../assets/images/ProfileImages/8.png';
+import profile9 from '../../assets/images/ProfileImages/9.png';
 
 
 
@@ -27,6 +27,11 @@ function LeftBarMainMenu(props) {
     2: profile2,
     3: profile3,
     4: profile4,
+    5: profile5,
+    6: profile6,
+    7: profile7,
+    8: profile8,
+    9: profile9,
   };
 
 

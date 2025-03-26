@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Bacground from "../../features/Bacground/Bacground.jsx";
+import BacgroundTwo from "../../features/Bacground/BacgroundTwo.jsx";
 
 import Galactic1 from "../../assets/images/galctics/1.gif";
 import Galactic2 from "../../assets/images/galctics/2.gif";
@@ -58,7 +58,7 @@ const MainMenuPage = () => {
   return (
     <div className="main-content-contener">
       
-      <Bacground />
+      <BacgroundTwo/>
         <div
         className={`main-content-arrow main-content-up-arrow ${currentSection === 1 ? "hidden" : ""}`}
         onClick={currentSection > 1 ? () => handleScroll("up") : undefined}
