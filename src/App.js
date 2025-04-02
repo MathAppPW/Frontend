@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { fetchUserProfile, setUserName } from "./store/reducer.jsx";
 import { useEffect } from "react";
 import Friends from "./pages/Friends.jsx";
+import Rank from "./pages/Rank.jsx";
 
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/task" element={<ExerciseSeries/>}/>
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/friends" element={<Friends/>}/>
+        <Route path ="/ranking" element={<Rank/>}/>
       </Routes>
     </Router>
   );
