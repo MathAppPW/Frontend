@@ -1,0 +1,108 @@
+.user-profile-popup {
+    width: 100%;
+ }
+  
+.user-info-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: calc(max(1vw, 1.5vh));
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+  
+.user-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+  
+.user-upper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+  
+.user-avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.user-avatar {
+    height: 12vh;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+  
+.user-nickname {
+    font-size: 1.8vh;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    text-align: center;
+    margin-top: 0.5vh;
+    margin-bottom: 4vh;
+  }
+  
+.user-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+  
+.friend-button,
+.mutual-button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3vh;
+    border: none;
+    border-radius: 5px;
+    border: white solid 1px;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-align: center;
+    width: calc(max(10vw, 100px));
+    color: white;
+}
+  
+.friend-button {
+    background-color: #00c9a7;
+}
+  
+.mutual-button {
+    background-color: #ab5cf9;
+}
+
+.friend-button:hover {
+    background-color: #00b09a;
+}
+
+.mutual-button:hover {
+    background-color: #9b4fd8;
+}
+  
+.user-stats-section {
+    margin-top: 1.4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 6px;
+    margin-left: 20px;
+    margin-right: 8vw;
+    font-size: 1.6vh;
+    color: white;
+}
+  
+.user-rocket-section {
+    position: absolute;
+    bottom: 1.5vh;
+    right: 1.5vw;
+}
+  
+.user-rocket {
+    height: calc(min(18vh, 18vw));
+    transform: rotate(30deg);
+    object-fit: contain;
+}
+  

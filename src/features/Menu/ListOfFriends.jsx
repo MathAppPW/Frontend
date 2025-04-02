@@ -17,6 +17,8 @@ import rocket2 from '../../assets/images/RocketsImages/2.png';
 import rocket3 from '../../assets/images/RocketsImages/3.png';
 import rocket4 from '../../assets/images/RocketsImages/4.png';
 
+import { useState } from "react";
+import UserProfilePopup from "../../components/Popup/UserProfilePopup";
 
 const ListOfFriends = () => {
     const profileImages = {
@@ -38,6 +40,8 @@ const ListOfFriends = () => {
         3: rocket3,
         4: rocket4,
     };
+
+    const [showUserPopup, setShowUserPopup] = useState(false);  
 
     return (
         <>
@@ -67,7 +71,7 @@ const ListOfFriends = () => {
 
 
                 </div>
-                <div className="header-list-of-friends header-list-of-friends">Znajdź nowych znajomych </div>
+                <div className="header-list-of-friends header-list-of-friends"  onClick={() => setShowUserPopup(true)}>Znajdź nowych znajomych </div>
                 <input className="search-friends"></input>
                 <div className="searched-friend-container">
                     <div className="one-friend-container" >
@@ -88,6 +92,12 @@ const ListOfFriends = () => {
 
             </div>
 
+            {showUserPopup && (
+                <UserProfilePopup
+                username="Minerbomb12!" 
+                onClose={() => setShowUserPopup(false)}
+                />
+            )}
         </>
     );
 }
