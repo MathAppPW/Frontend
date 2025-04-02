@@ -2,47 +2,41 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import "../styles/log-page.css";
-import { useDispatch } from "react-redux";
-import { fetchUserProfile, setUserName } from "../../src/store/reducer.jsx";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const checkAuthStatus = async () => {
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) return;
-
-    try {
-      const response = await fetch(`/User/test`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        await dispatch(fetchUserProfile());
-        dispatch(setUserName(username));
-        navigate("/menu");
-      } else {
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+  
+      try {
+        const response = await fetch("/User/test", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (response.ok) {
+          navigate("/menu");
+        } else {
+          localStorage.removeItem("accessToken");
+        }
+      } catch {
         localStorage.removeItem("accessToken");
       }
-    } catch (error) {
-      console.error("Error verifying token:", error);
-    }
-  };
-
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
+    };
+  
+    checkToken();
+  }, [navigate]);
+  
 
   const isValidPassword = (password) => {
     const passwordRegex =
@@ -93,8 +87,6 @@ const RegisterPage = () => {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken);
         setErrorMessage("");
-        await dispatch(fetchUserProfile());
-        dispatch(setUserName(username));
         navigate("/menu");
       } else {
         const errorData = await response.json();
