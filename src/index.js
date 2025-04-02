@@ -8,6 +8,7 @@ import "./styles/exercise-series.css" ;
 import "./components/Borders.css";
 import "./styles/system-menu.css";
 import "./styles/profile-page.css";
+import "./styles/user-profile-popup.css";
 
 import { Provider } from "react-redux";
 import store from "./store/store.jsx";

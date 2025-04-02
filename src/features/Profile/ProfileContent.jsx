@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Popup from "./Popup";
+import TaskChart from "./charts/TaskChart";
+import TimeChart from "./charts/TimeChart";
+import EditPopup from "./popups/EditPopup";
+import ConfirmDeletePopup from "./popups/ConfirmDeletePopup";
+import ChangeFieldPopup from "./popups/ChangeFieldPopup";
+import AvatarPopup from "./popups/AvatarPopup";
+import ShipPopup from "./popups/ShipPopup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../store/reducer";
-import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,6 +21,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
 
+// Generacjo losowych danych do testów
 const generateTestData = () => {
   const data = [];
   const today = new Date();
@@ -94,7 +100,6 @@ const getAggregatedData = (range, data) => {
           exercisesCountSuccessful: 0,
           exercisesCountFailed: 0,
           exercisesCount: 0,
-          // Poprawny format ISO z zerowym wypełnieniem
           date: `${year}-${paddedMonth}-01T00:00:00Z`
         };
       }
@@ -134,7 +139,10 @@ const ProfileContent = () => {
   const [timeData, setTimeData] = useState([]);
   const [tasksFilterRange, setTasksFilterRange] = useState("week");
   const [timeFilterRange, setTimeFilterRange] = useState("week");
-  
+  const [isNameChangeOpen, setNameChangeOpen] = useState(false);
+  const [isEmailChangeOpen, setEmailChangeOpen] = useState(false);
+  const [isPasswordChangeOpen, setPasswordChangeOpen] = useState(false);
+  const [userData, setUserData] = useState({ username: "", email: "" });
   const dispatch = useDispatch();
 
   const importAll = (context) => {
@@ -162,26 +170,31 @@ const ProfileContent = () => {
     return ordered;
   }, {});
 
-  const authHeader = {
+  const getAuthHeader = () => ({
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`
     }
-  };
-
+  });
+  
   useEffect(() => {
-    axios.get("/Streak/longest", authHeader)
+    axios.get("/Streak/longest", getAuthHeader())
       .then(res => setBestStreak(res.data.streak))
       .catch(err => console.error("Błąd pobierania streaka:", err));
-  }, []);
+  }, []);  
 
   useEffect(() => {
-    const testData = generateTestData();
-    setAllData(testData);
-    const totalSecs = testData.reduce((sum, d) => sum + d.secondsSpent, 0);
-    const totalEx = testData.reduce((sum, d) => sum + d.exercisesCount, 0);
-    setTotalExercises(totalEx);
-    setTotalHours(Math.round((totalSecs / 3600) * 10) / 10);
-  }, []);
+    axios.get("/History/days", getAuthHeader())
+      .then(res => {
+        const data = res.data.days;
+        //const data = generateTestData();
+        setAllData(data);
+        const totalSecs = data.reduce((sum, d) => sum + d.secondsSpent, 0);
+        const totalEx = data.reduce((sum, d) => sum + d.exercisesCount, 0);
+        setTotalExercises(totalEx);
+        setTotalHours(Math.round((totalSecs / 3600) * 10) / 10);
+      })
+      .catch(err => console.error("Błąd pobierania statystyk:", err));
+  }, []);  
 
   useEffect(() => {
     const data = getAggregatedData(tasksFilterRange, allData);
@@ -195,7 +208,7 @@ const ProfileContent = () => {
 
   useEffect(() => {
     if (isAvatarOpen && selectedAvatarId === null) {
-      axios.get("/ProfileSkin", authHeader)
+      axios.get("/ProfileSkin", getAuthHeader())
         .then(res => setSelectedAvatarId(res.data.skinId))
         .catch(err => console.error("Błąd pobierania awatara:", err));
     }
@@ -203,11 +216,17 @@ const ProfileContent = () => {
 
   useEffect(() => {
     if (isShipOpen && selectedShipId === null) {
-      axios.get("/RocketSkin", authHeader)
+      axios.get("/RocketSkin", getAuthHeader())
         .then(res => setSelectedShipId(res.data.skinId))
         .catch(err => console.error("Błąd pobierania rakiety:", err));
     }
   }, [isShipOpen, selectedShipId]);
+
+  useEffect(() => {
+    axios.get("/User/email", getAuthHeader())
+      .then(res => setUserData(res.data))
+      .catch(err => console.error("Błąd pobierania danych użytkownika:", err));
+  }, []);  
 
   const saveAvatar = () => {
     axios.post("/ProfileSkin", { skinId: selectedAvatarId }, {
@@ -261,209 +280,93 @@ const ProfileContent = () => {
       </div>
 
       <div className="profile-charts">
-        <div className="charts-column" style={{ position: "relative", flexGrow: 1 }}>
-          <div className="chart-box">
-            <Bar
-              data={{
-                labels: tasksData.map(d => formatLabel(tasksFilterRange, d.date)),
-                datasets: [
-                  {
-                    label: "Złe",
-                    data: tasksData.map(d => d.exercisesCountFailed),
-                    backgroundColor: "#FF4C8B",
-                    stack: 'zadania',
-                    borderColor: "white",
-                    borderWidth: 2,
-                    borderRadius: 5
-                  },
-                  {
-                    label: "Dobre",
-                    data: tasksData.map(d => d.exercisesCountSuccessful),
-                    backgroundColor: "#2BF8D6",
-                    stack: 'zadania',
-                    borderColor: "white",
-                    borderWidth: 2,
-                    borderRadius: 5
-                  }
-                ]
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    position: "top",
-                    labels: { color: "white" },
-                    reverse: true
-                  },
-                  title: {
-                    display: true,
-                    text: "Liczba zrobionych zadań",
-                    color: "white",
-                    font: { size: 16 },
-                    padding: { top: 15 }
-                  }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    stacked: true,
-                    ticks: { color: "white", maxRotation: 45, minRotation: 45 },
-                    grid: { color: "rgba(255, 255, 255, 0.1)" }
-                  },
-                  y: {
-                    stacked: true,
-                    beginAtZero: true,
-                    ticks: { color: "white" },
-                    grid: { color: "rgba(255, 255, 255, 0.1)" }
-                  }
-                }
-              }}
-            />
-          </div>
-          <div className="chart-filter" style={{ position: "absolute", right: "10px", top: "10px" }}>
-            <select
-              value={tasksFilterRange}
-              onChange={(e) => setTasksFilterRange(e.target.value)}
-              className="task-filter"
-            >
-              <option value="week">Ostatni tydzień</option>
-              <option value="8weeks">Ostatnie 8 tygodni</option>
-              <option value="month">Ostatnie 12 miesięcy</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="charts-column" style={{ position: "relative", flexGrow: 1 }}>
-          <div className="chart-box">
-            <Bar
-              data={{
-                labels: timeData.map(d => formatLabel(timeFilterRange, d.date)),
-                datasets: [
-                  {
-                    label: "Czas w minutach",
-                    data: timeData.map(d => Math.round(d.secondsSpent / 60)),
-                    backgroundColor: "#AD15FF",
-                    borderColor: "white",
-                    borderWidth: 2,
-                    borderRadius: 5
-                  }
-                ]
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    position: "top",
-                    labels: { color: "white" }
-                  },
-                  title: {
-                    display: true,
-                    text: "Czas poświęcony na zadania",
-                    color: "white",
-                    font: { size: 16 },
-                    padding: { top: 15 }
-                  }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    ticks: { color: "white", maxRotation: 45, minRotation: 45 },
-                    grid: { color: "rgba(255, 255, 255, 0.1)" }
-                  },
-                  y: {
-                    beginAtZero: true,
-                    ticks: { color: "white" },
-                    grid: { color: "rgba(255, 255, 255, 0.1)" }
-                  }
-                }
-              }}
-            />
-          </div>
-          <div className="chart-filter" style={{ position: "absolute", right: "10px", top: "10px" }}>
-            <select
-              value={timeFilterRange}
-              onChange={(e) => setTimeFilterRange(e.target.value)}
-              className="task-filter"
-            >
-              <option value="week">Ostatni tydzień</option>
-              <option value="8weeks">Ostatnie 8 tygodni</option>
-              <option value="month">Ostatnie 12 miesięcy</option>
-            </select>
-          </div>
-        </div>
+        <TaskChart
+          data={tasksData}
+          range={tasksFilterRange}
+          onFilterChange={setTasksFilterRange}
+          formatLabel={formatLabel}
+        />
+        <TimeChart
+          data={timeData}
+          range={timeFilterRange}
+          onFilterChange={setTimeFilterRange}
+          formatLabel={formatLabel}
+        />
       </div>
 
       {isEditOpen && (
-        <Popup title="Edycja konta" onClose={() => setEditOpen(false)}>
-          <div className="edit-popup">
-            <div className="edit-field">
-              <span className="edit-label">Nazwa użytkownika:</span>
-              <button className="edit-button">Edytuj</button>
-            </div>
-            <div className="edit-field">
-              <span className="edit-label">Adres e-mail:</span>
-              <button className="edit-button">Edytuj</button>
-            </div>
-            <div className="edit-field">
-              <span className="edit-label">Hasło:</span>
-              <button className="edit-button">Edytuj</button>
-            </div>
-            <div className="save-buttons">
-              <button className="profile-save-button">Zapisz zmiany</button>
-              <button className="profile-save-button" onClick={() => setEditOpen(false)}>Cofnij</button>
-            </div>
-            <div className="delete-section">
-              <h2>Usunięcie konta</h2>
-              <p>Usuwasz konto na własną odpowiedzialność, stracisz cały postęp.</p>
-              <button className="delete-button" onClick={() => setDeleteConfirmOpen(true)}>Usuń konto</button>
-            </div>
-          </div>
-        </Popup>
+        <EditPopup
+          username={userData.username}
+          email={userData.email}
+          onClose={() => setEditOpen(false)}
+          onNameEdit={() => setNameChangeOpen(true)}
+          onEmailEdit={() => setEmailChangeOpen(true)}
+          onPasswordEdit={() => setPasswordChangeOpen(true)}
+          onDeleteConfirm={() => setDeleteConfirmOpen(true)}
+        />
       )}
 
       {isDeleteConfirmOpen && (
-        <Popup title="Czy usunąć?" onClose={() => setDeleteConfirmOpen(false)}>
-          <div className="confirmation-popup">
-            <div className="confirmation-buttons">
-              <button className="profile-change-button" onClick={() => setDeleteConfirmOpen(false)}>NIE</button>
-            </div>
-            <p>By usunąć konto wpisz <strong>swoje hasło</strong>, a następnie kliknij przycisk poniżej.</p>
-            <input type="text" className="confirm-input" />
-            <button className="delete-button">Usuń konto</button>
-          </div>
-        </Popup>
+        <ConfirmDeletePopup onClose={() => setDeleteConfirmOpen(false)} />
+      )}
+
+      {isNameChangeOpen && (
+        <ChangeFieldPopup
+          title="Zmiana nazwy użytkownika"
+          label="Nazwa użytkownika"
+          onSave={(newValue) => {
+            // TODO: zapisz zmianę
+            setNameChangeOpen(false);
+          }}
+          onClose={() => setNameChangeOpen(false)}
+        />
+      )}
+
+      {isEmailChangeOpen && (
+        <ChangeFieldPopup
+          title="Zmiana adresu e-mail"
+          label="Adres e-mail"
+          onSave={(newValue) => {
+            // TODO: zapisz zmianę
+            setEmailChangeOpen(false);
+          }}
+          onClose={() => setEmailChangeOpen(false)}
+        />
+      )}
+
+      {isPasswordChangeOpen && (
+        <ChangeFieldPopup
+          title="Zmiana hasła"
+          label="Nowe hasło"
+          isPassword
+          onSave={(newValue) => {
+            // TODO: zapisz zmianę
+            setPasswordChangeOpen(false);
+          }}
+          onClose={() => setPasswordChangeOpen(false)}
+        />
       )}
 
       {isAvatarOpen && (
-        <Popup title="Zmiana awatara" onClose={() => setAvatarOpen(false)}>
-          <div className="avatar-container">
-            {Object.entries(avatars).map(([key, src], i) => (
-              <div key={key} className="avatar-box" onClick={() => setSelectedAvatarId(Number(key))}>
-                <img src={src} alt={avatarNames[i]} className="avatar-image" />
-                <span className={`avatar-name ${selectedAvatarId === Number(key) ? "selected" : ""}`}>
-                  {avatarNames[i]}
-                </span>
-              </div>
-            ))}
-          </div>
-          <button className="profile-save-button" onClick={saveAvatar}>Zapisz zmiany</button>
-        </Popup>
+        <AvatarPopup
+          avatars={avatars}
+          avatarNames={avatarNames}
+          selectedAvatarId={selectedAvatarId}
+          setSelectedAvatarId={setSelectedAvatarId}
+          onSave={saveAvatar}
+          onClose={() => setAvatarOpen(false)}
+        />
       )}
 
       {isShipOpen && (
-        <Popup title="Zmiana statku" onClose={() => setShipOpen(false)}>
-          <div className="ship-container">
-            {Object.entries(ships).map(([key, src], i) => (
-              <div key={key} className="ship-box" onClick={() => setSelectedShipId(Number(key))}>
-                <img src={src} alt={shipNames[i]} className="ship-image" />
-                <span className={`ship-name ${selectedShipId === Number(key) ? "selected" : ""}`}>
-                  {shipNames[i]}
-                </span>
-              </div>
-            ))}
-          </div>
-          <button className="profile-save-button" onClick={saveShip}>Zapisz zmiany</button>
-        </Popup>
+        <ShipPopup
+          ships={ships}
+          shipNames={shipNames}
+          selectedShipId={selectedShipId}
+          setSelectedShipId={setSelectedShipId}
+          onSave={saveShip}
+          onClose={() => setShipOpen(false)}
+        />
       )}
     </div>
   );
