@@ -32,8 +32,6 @@ const LoginPage = () => {
        
         await dispatch(fetchUserProfile());
         dispatch(setUserName(username));
-        console.log("Nazwa");
-        localStorage.setItem("username", "Kornelia");
 
         navigate("/menu"); // User is authenticated, navigate to menu
       } else {
@@ -85,9 +83,9 @@ const LoginPage = () => {
    
         await dispatch(fetchUserProfile());
         dispatch(setUserName(username));
-        localStorage.setItem("username", "Kornelia");
 
         console.log("Nazwa");
+
         navigate("/menu");
       } else {
         const errorData = await response.json();

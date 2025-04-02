@@ -1,6 +1,7 @@
 .mini-calendar {
-    margin-top: 11.5vh;
-    width: 23vh;
+    position: fixed;
+    bottom: 2vh;
+    width: 12vw;
     margin-left: 6vw;
     background-color: #02b49635;
     border: 3px solid #FF4C8B;
