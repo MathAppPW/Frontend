@@ -11,40 +11,31 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Function to check token validity
-  const checkAuthStatus = async () => {
-    const token = localStorage.getItem("accessToken");
-   
-    
-
-    if (!token) return; // No token, user needs to log in
-
-    try {
-      const response = await fetch(`/User/test`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-       
-        await dispatch(fetchUserProfile());
-        dispatch(setUserName(username));
-
-        navigate("/menu"); // User is authenticated, navigate to menu
-      } else {
-        localStorage.removeItem("accessToken"); // Token invalid, remove it
-      }
-    } catch (error) {
-      console.error("Error verifying token:", error);
-    }
-  };
-
   useEffect(() => {
-    checkAuthStatus(); // Run this when the component mounts
-  }, []);
+    const checkToken = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      try {
+        const response = await fetch("/User/test", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          navigate("/menu");
+        } else {
+          localStorage.removeItem("accessToken");
+        }
+      } catch {
+        localStorage.removeItem("accessToken");
+      }
+    };
+
+    checkToken();
+  }, [navigate]);
 
   const isValidPassword = (password) => {
     const passwordRegex =
@@ -80,11 +71,10 @@ const LoginPage = () => {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken); // Save token
         setErrorMessage("");
-   
+
         await dispatch(fetchUserProfile());
         dispatch(setUserName(username));
-
-        console.log("Nazwa");
+        localStorage.setItem("username", "Kornelia");
 
         navigate("/menu");
       } else {
@@ -131,7 +121,9 @@ const LoginPage = () => {
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-          <button type="submit" className="auth-button">Zaloguj się</button>
+          <button type="submit" className="auth-button">
+            Zaloguj się
+          </button>
         </form>
 
         <div className="auth-links">
