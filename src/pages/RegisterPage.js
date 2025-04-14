@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import "../styles/log-page.css";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile} from "../../src/store/reducer.jsx";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +28,7 @@ const RegisterPage = () => {
         });
   
         if (response.ok) {
+          await dispatch(fetchUserProfile());
           navigate("/menu");
         } else {
           localStorage.removeItem("accessToken");
@@ -87,6 +91,7 @@ const RegisterPage = () => {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken);
         setErrorMessage("");
+        await dispatch(fetchUserProfile());
         navigate("/menu");
       } else {
         const errorData = await response.json();
