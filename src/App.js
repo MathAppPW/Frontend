@@ -12,6 +12,7 @@ import ExerciseSeries from "./pages/ExerciseSeries";
 import ProfilePage from "./pages/ProfilePage";
 import Friends from "./pages/Friends.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Rank from "./pages/Rank.jsx"
 
 const App = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Friends />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ranking"
+          element={
+            <ProtectedRoute>
+              <Rank/>
             </ProtectedRoute>
           }
         />
