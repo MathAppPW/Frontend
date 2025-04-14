@@ -94,7 +94,7 @@ const ListOfFriends = () => {
 
             {showUserPopup && (
                 <UserProfilePopup
-                username="Minerbomb12!" 
+                username="Minerbomb12!2" 
                 onClose={() => setShowUserPopup(false)}
                 />
             )}

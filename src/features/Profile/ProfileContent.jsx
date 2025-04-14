@@ -8,7 +8,7 @@ import AvatarPopup from "./popups/AvatarPopup";
 import ShipPopup from "./popups/ShipPopup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { fetchUserProfile } from "../../store/reducer";
+import { fetchUserProfile, setUserName } from "../../store/reducer";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -143,6 +143,13 @@ const ProfileContent = () => {
   const [isEmailChangeOpen, setEmailChangeOpen] = useState(false);
   const [isPasswordChangeOpen, setPasswordChangeOpen] = useState(false);
   const [userData, setUserData] = useState({ username: "", email: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [pendingChanges, setPendingChanges] = useState({
+    newUsername: null,
+    newEmail: null,
+    newPassword: null,
+  });  
   const dispatch = useDispatch();
 
   const importAll = (context) => {
@@ -262,6 +269,40 @@ const ProfileContent = () => {
     return formatLabelFor(range, isoDate);
   };
 
+  const handleApplyChanges = async () => {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    };
+  
+    try {
+      if (pendingChanges.newUsername && pendingChanges.newUsername !== userData.username) {
+        await axios.put("/User/updateUsername", { newUsername: pendingChanges.newUsername }, { headers });
+        setUserData(prev => ({ ...prev, username: pendingChanges.newUsername }));
+        dispatch(setUserName(pendingChanges.newUsername));
+      }
+  
+      if (pendingChanges.newEmail && pendingChanges.newEmail !== userData.email) {
+        await axios.put("/User/updateMail", { newMail: pendingChanges.newEmail }, { headers });
+        setUserData(prev => ({ ...prev, email: pendingChanges.newEmail }));
+      }
+  
+      if (pendingChanges.newPassword) {
+        await axios.put("/User/updatePassword", pendingChanges.newPassword, { headers });
+      }
+  
+      dispatch(fetchUserProfile());
+      setEditOpen(false);
+      setPendingChanges({ newUsername: null, newEmail: null, newPassword: null });
+      setErrorMessage("");
+    } catch (err) {
+      console.error("Błąd przy zapisie zmian:", err);
+      setErrorMessage("Podane zmiany są niepoprawne lub zajęte przez innego użytkownika!");
+    }
+  };  
+  
+
   return (
     <div className="profile-content">
       <div className="profile-container">
@@ -298,11 +339,18 @@ const ProfileContent = () => {
         <EditPopup
           username={userData.username}
           email={userData.email}
-          onClose={() => setEditOpen(false)}
+          onClose={() => {
+            setEditOpen(false);
+            setErrorMessage("");
+            setPendingChanges({ newUsername: null, newEmail: null, newPassword: null });
+          }}
           onNameEdit={() => setNameChangeOpen(true)}
           onEmailEdit={() => setEmailChangeOpen(true)}
           onPasswordEdit={() => setPasswordChangeOpen(true)}
           onDeleteConfirm={() => setDeleteConfirmOpen(true)}
+          onSave={handleApplyChanges}
+          pendingChanges={pendingChanges}
+          errorMessage={errorMessage}
         />
       )}
 
@@ -314,9 +362,9 @@ const ProfileContent = () => {
         <ChangeFieldPopup
           title="Zmiana nazwy użytkownika"
           label="Nazwa użytkownika"
-          onSave={(newValue) => {
-            // TODO: zapisz zmianę
-            setNameChangeOpen(false);
+          onSave={(value) => {
+            setPendingChanges(prev => ({ ...prev, newUsername: value }));
+            setEmailChangeOpen(false);
           }}
           onClose={() => setNameChangeOpen(false)}
         />
@@ -326,8 +374,8 @@ const ProfileContent = () => {
         <ChangeFieldPopup
           title="Zmiana adresu e-mail"
           label="Adres e-mail"
-          onSave={(newValue) => {
-            // TODO: zapisz zmianę
+          onSave={(value) => {
+            setPendingChanges(prev => ({ ...prev, newEmail: value }));
             setEmailChangeOpen(false);
           }}
           onClose={() => setEmailChangeOpen(false)}
@@ -339,10 +387,10 @@ const ProfileContent = () => {
           title="Zmiana hasła"
           label="Nowe hasło"
           isPassword
-          onSave={(newValue) => {
-            // TODO: zapisz zmianę
+          onSave={(value) => {
+            setPendingChanges(prev => ({ ...prev, newPassword: value }));
             setPasswordChangeOpen(false);
-          }}
+          }}          
           onClose={() => setPasswordChangeOpen(false)}
         />
       )}

@@ -52,6 +52,7 @@
 }
   
 .friend-button,
+.friend-button-r,
 .mutual-button {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.3vh;
@@ -68,6 +69,10 @@
 .friend-button {
     background-color: #00c9a7;
 }
+
+.friend-button-r {
+    background-color: #d55c00;
+}
   
 .mutual-button {
     background-color: #ab5cf9;
@@ -79,6 +84,10 @@
 
 .mutual-button:hover {
     background-color: #9b4fd8;
+}
+
+.friend-button-r:hover {
+    background-color: #a74800;
 }
   
 .user-stats-section {
