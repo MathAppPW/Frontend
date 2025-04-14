@@ -1,212 +1,312 @@
-/*prawa i lewa strona menu */
-
-.bar-main-menu-small{
-    background-color:  #1a084e;;
-    height: 100vh;
-    width: 11vw;
-    position: fixed;
-    top: 0;
-    z-index: 3;
-
-} 
-
+/* -------------------------
+   LEFT & RIGHT TRIANGLE BARS
+------------------------- */
+.bar-main-menu-small {
+  background-color: #1a084e;
+  height: 100vh;
+  width: 11vw;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
 
 .left-bar-main-menu-small {
-    left: 0;
-    clip-path: polygon(
-        0 0,          /* Górny lewy róg */
-        100% 0,       /* Górny prawy róg */
-        54% 50%,      /* Wcięcie w środku (po prawej) */
-        100% 100%,    /* Dolny prawy róg */
-        0 100%        /* Dolny lewy róg */
-    );
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 54% 50%, 100% 100%, 0 100%);
 }
+
 .right-bar-main-menu-small {
-    right: 0; 
-    clip-path: polygon(
-        0 0, 
-        100% 0, 
-        100% 100%,
-         0% 100%, 
-         46% 50%, 
-         0% 0%
-    );
+  right: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 46% 50%, 0 0);
 }
 
-/*ramki-menu*/
-
-.borrder-menu-small{
-    position: fixed;
-    z-index: 2.5;
-    
-    height: 50.05vh;
-    width: 4px;
-
-    border-right: 2px solid white;
-    transform-origin: top;
+/* The angled border “strips” on each side */
+.borrder-menu-small {
+  position: fixed;
+  z-index: 2.5;
+  height: 50.05vh;
+  width: 4px;
+  border-right: 2px solid white;
+  transform-origin: top;
 }
 
 .right-borrder-menu-top-small {
-    top: 0;
-    left: 11vw;
-    transform: skew(-10.3deg);
+  top: 0;
+  left: 11vw;
+  transform: skew(-10.3deg);
 }
 
 .right-borrder-menu-bottom-small {
-    bottom: 0;
-    left: 11vw;
-    transform: skew(10.30deg);   
-    transform-origin: bottom right;  
+  bottom: 0;
+  left: 11vw;
+  transform: skew(10.3deg);
+  transform-origin: bottom right;
 }
 
-.left-borrder-menu-top-small{
-    top: 0;
-    right: 11vw;
-    transform: skew(10.3deg);
-}
-.left-borrder-menu-bottom-small{
-    bottom: 0;
-    right: 11vw;
-    transform: skew(-10.30deg);   
-    transform-origin: bottom right;  
+.left-borrder-menu-top-small {
+  top: 0;
+  right: 11vw;
+  transform: skew(10.3deg);
 }
 
-.borrder-menu-small::after{
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 6px; 
-    background: #ad15f3; 
-    top: 0; 
-    z-index: -1; 
-    filter: blur(8px); 
-    pointer-events: none; 
+.left-borrder-menu-bottom-small {
+  bottom: 0;
+  right: 11vw;
+  transform: skew(-10.3deg);
+  transform-origin: bottom right;
 }
+
+.borrder-menu-small::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 6px;
+  background: #ad15f3;
+  top: 0;
+  z-index: -1;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
 .right-borrder-menu-top-small::after {
-    left: 100%;
+  left: 100%;
 }
 
-.right-borrder-menu-bottom-small::after{
-    left: 100%;    
+.right-borrder-menu-bottom-small::after {
+  left: 100%;
 }
 
 .left-bar-main-menu-small::after {
-    right: 100%;
+  right: 100%;
 }
 
-.left-bar-main-menu-small::after{
-    right: 100%;    
+.left-bar-main-menu-small::after {
+  right: 100%;
 }
 
-/*zadania*/
-.main-exercise-container{
-    height: 100vh;
-    width: 70vw;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-.app-title-main-exercise{
-    margin-bottom: 2vh;
-}
-.frame{
-    height: 85vh;
-    width: 66vw;
-    background-color: #6b0ea970;
-    border: 0.1vh solid white;
-    border-radius: 3vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* -------------------------
+     EXERCISE CONTAINER STYLES
+  ------------------------- */
+.exercise-container-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vw;
+  max-width: 1400px;
+  margin-top: 5vh;
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  font-family: "Orbitron", sans-serif;
 }
 
-.exercise-progress-bar-container{
-    height: 4vh;
-    width: 65vw;
-    margin-top: 1vh;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.2vw;
-    margin-left: 1.5vw;
-
-}
-.exercise-progress-bar{
-    height: 2vh;
-    width: 59vw;
-    background-color: rgba(255, 255, 255, 0.441);
-    margin-left: -1vw;
-    border: 0.2vh solid white;
-    border-radius: 0.6vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0;
-    z-index: 6;
-}
-.exercise-progress{
-    height: 1.98vh;
-    width: 15vw;
-    background-color: #6138CF;
-    border: 0.2vh solid white;
-    border-left: 0.1vh solid white;
-    border-radius: 0.6vh;
-    margin: 0;
-    padding: 0;
-    z-index: 4;
+.app-title-main-exercise {
+  font-family: "Orbitron", sans-serif;
+  font-size: 3vw;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 3vh;
+  color: #ffffff;
 }
 
-.life-left-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.1vw;
-    margin-left: -0.3vw;
-}
-.life-left{
-    font-size: 2vh;
-    color: #FF4C8B;
-}
-.iconse-progress-bar{
-    height: 2vh;
+.exercise-frame {
+  position: relative;
+  background-color: #1b065b;
+  border-radius: 12px;
+  padding: 3vh;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  border: 3px solid #ffffff;
 }
 
-.polecenie{
-    height: 12vh;
-    width: 58vw;
-    margin-left: -2vw;
-    margin-top: 1.5vh;
-    background-color: rgba(255, 255, 255, 0.192);
+.exercise-frame::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #ad15f3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  padding: 10px;
+  border-radius: 12px;
+  filter: blur(1.5rem);
 }
 
-.zdjecie{
-    height: 40vh;
-    width: 58vw;
-    margin-left: -2vw;
-    margin-top: 1vh;
-    background-color: rgba(255, 255, 255, 0.192);
+/* top bar with X, progress bar, hearts */
+.exercise-progress-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.2vw;
+  margin-bottom: 2vh;
 }
-.answer-button-container{
-    height: 10vh;
-    width: 58vw;
-    margin-left: -2vw;
-    margin-top: 1vh;
-    background-color: rgba(255, 255, 255, 0.192);
-}
-.hint-container{
-    height: 10vh;
-    width: 58vw;
-    margin-left: -2vw;
-    margin-top: 1vh;
-    background-color: rgba(255, 255, 255, 0.192);
-    
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    padding: 1vh;
-    gap: 0.3vh
 
+.close-icon {
+  cursor: pointer;
+  font-size: 1.5vw;
+  color: #ffffff;
+}
+
+/* Outer bar */
+.exercise-progress-bar {
+  flex: 1;
+  height: 2vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 0.2vh solid white;
+  border-radius: 0.6vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Inner fill */
+.exercise-progress {
+  height: 100%;
+  width: 0%; /* replaced inline by React */
+  background-color: #6138cf;
+  border-radius: 0.3vh;
+  transition: width 0.3s ease;
+}
+
+/* Lives (heart) area */
+.life-left-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4vw;
+}
+
+.heart-icon {
+  font-size: 1.5vw;
+}
+
+.life-left {
+  font-size: 1.5vw;
+  color: #ff4c8b;
+}
+
+/* The main question/hint/answers layout */
+.exercise-content {
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.exercise-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 2vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.exercise-question {
+  margin: 0;
+  font-size: 1.4vw;
+  line-height: 1.2;
+}
+
+.exercise-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 400px;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* Answers */
+.answer-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Base button style */
+.answer-button {
+  font-family: "Orbitron", sans-serif;
+  background-color: #160c6f;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 1vh 2vh;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-size: 1.1vw;
+}
+
+.answer-button:hover {
+  background-color: #ad15f3;
+}
+
+/* Mark the selected answer with a purple highlight */
+.answer-button.selected {
+  background-color: #ad15f3;
+  border-color: #ad15f3;
+}
+
+/* If user submitted and we highlight correct or incorrect */
+.answer-button.correct {
+  background-color: #1aff1a; /* bright green */
+  border-color: #00cc00;
+  color: #000;
+}
+.answer-button.incorrect {
+  background-color: #ff1a1a; /* bright red */
+  border-color: #cc0000;
+  color: #000;
+}
+
+/* Hints */
+.hint-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.button-hint {
+  font-family: "Orbitron", sans-serif;
+  background-color: #160c6f;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.8vh 1.5vh;
+  cursor: pointer;
+  font-size: 1vw;
+  transition: background-color 0.3s ease;
+}
+
+.button-hint:hover {
+  background-color: #ad15f3;
+}
+
+.hint-text {
+  margin: 0;
+  font-size: 1.1vw;
+}
+
+/* Submit or Next button area */
+.submit-box {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-button {
+  font-family: "Orbitron", sans-serif;
+  background-color: #ad15f3;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 1vh 2vh;
+  cursor: pointer;
+  font-size: 1.2vw;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #ae05fdc1;
 }
