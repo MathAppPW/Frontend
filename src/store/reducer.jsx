@@ -66,6 +66,7 @@ const reductor = (state = initialState, action) => {
     case SET_PROFILE:
       return {
         ...state,
+        userName: action.payload.username,
         profilePicture: action.payload.profileSkin,
         rocketSkin: action.payload.rocketSkin,
         level: action.payload.level,

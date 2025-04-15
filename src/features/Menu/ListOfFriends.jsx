@@ -17,10 +17,30 @@ import rocket2 from '../../assets/images/RocketsImages/2.png';
 import rocket3 from '../../assets/images/RocketsImages/3.png';
 import rocket4 from '../../assets/images/RocketsImages/4.png';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import UserProfilePopup from "../../components/Popup/UserProfilePopup";
 
 const ListOfFriends = () => {
+
+    const getAuthHeader = () => ({
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    });
+
+    const [friends, setFriends] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchedFriend, setSearchedFriend] = useState(null);
+    const [searchError, setSearchError] = useState(null);
+    const [showUserPopup, setShowUserPopup] = useState(false);
+
+    useEffect(() => {
+        axios.get("/Friend/friends", getAuthHeader())
+            .then(res => {setFriends(res.data); setSearchError(false);})
+            .catch(err => console.error(err));
+    }, []);
+
     const profileImages = {
         0: profile0,
         1: profile1,
@@ -41,7 +61,22 @@ const ListOfFriends = () => {
         4: rocket4,
     };
 
-    const [showUserPopup, setShowUserPopup] = useState(false);  
+    const handleSearchFriend = () => {
+        if (!searchInput.trim()) return;
+
+        axios
+            .get(`/Search/search/${searchInput}`, getAuthHeader())
+            .then((res) => {
+                setSearchedFriend({ ...res.data, username: searchInput });
+                setSearchError(null);
+            })
+            .catch(() => {
+                setSearchedFriend(null);
+                setSearchError("Nie istnieje użytkownik o podanej nazwie!");
+            });
+    };
+
+
 
     return (
         <>
@@ -68,34 +103,52 @@ const ListOfFriends = () => {
                         </div>
                     ))}
 
-
-
                 </div>
-                <div className="header-list-of-friends header-list-of-friends"  onClick={() => setShowUserPopup(true)}>Znajdź nowych znajomych </div>
-                <input className="search-friends"></input>
-                <div className="searched-friend-container">
-                    <div className="one-friend-container" >
-                        <img className="one-friend-profile-picture" src={profileImages[2]} />
-                        <p className="friend-userName"> username {27}</p>
-                        <div className="firnds-onfo-container">
-                            <p className="friend-level">Level: {13}</p>
-                            <div className="friend-streak-conainer">
-                                <p className="friend-streak">Streak: 300 </p>
-                                <img src={fire} className="fire-friend"></img>
+                <div className="header-list-of-friends header-list-of-friends" >Znajdź nowych znajomych </div>
+
+                <div className="search-friend-section">
+                    <input
+                        className="search-friends"
+                        placeholder="Wpisz nazwę użytkownika"
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearchFriend}>Szukaj</button>
+                </div>
+                {searchError && (
+                    <p className="search-error">{searchError}</p>
+                )}
+
+                {searchedFriend && (
+                    <div className="searched-friend-container">
+                        <div className="one-friend-container searched-one-friend-container" onClick={() => setShowUserPopup(true)}>
+                            <img
+                                className="one-friend-profile-picture"
+                                src={profileImages[searchedFriend.profileSkin]}
+                            />
+                            <p className="friend-userName">{searchedFriend.username}</p>
+                            <div className="firnds-onfo-container">
+                                <p className="friend-level">Level: {searchedFriend.level}</p>
+                                <div className="friend-streak-conainer">
+                                    <p className="friend-streak">Streak: {searchedFriend.streak}</p>
+                                    <img src={fire} className="fire-friend" />
+                                </div>
                             </div>
-
+                            <img
+                                className="frind-rocket"
+                                src={rocketImages[searchedFriend.rocketSkin]}
+                            />
                         </div>
-                        <img className="frind-rocket" src={rocketImages[4]} />
                     </div>
-                </div>
-
+                )}
 
             </div>
 
             {showUserPopup && (
                 <UserProfilePopup
-                username="Minerbomb12!2" 
-                onClose={() => setShowUserPopup(false)}
+                    username="!Nela123"
+                    onClose={() => setShowUserPopup(false)}
+
                 />
             )}
         </>
@@ -103,3 +156,4 @@ const ListOfFriends = () => {
 }
 
 export default ListOfFriends
+
