@@ -285,6 +285,13 @@
     border-bottom-left-radius: 0.7vh;
 }
 
+.heal-timer {
+    font-size: 0.85rem;
+    color: #ff4c8b;
+    margin-top: 5px;
+    text-align: center;
+  }
+
 /* środek menu */
 
 .main-content-contener {
