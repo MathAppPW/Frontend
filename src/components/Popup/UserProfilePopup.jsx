@@ -42,10 +42,12 @@ const rocketImages = {
 
 const UserProfilePopup = ({ username, onClose }) => {
   const [userData, setUserData] = useState(null);
+  const [invitationSent, setInvitationSent] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    axios.post(`/Search/search-verbose/${username}`, null, {
+    axios.get(`/Search/search-verbose/${username}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -53,6 +55,36 @@ const UserProfilePopup = ({ username, onClose }) => {
       .then((res) => setUserData(res.data))
       .catch((err) => console.error("Błąd profilu:", err));
   }, [username]);
+
+  const handleAddFriend = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.post("/Friends/new", `"${username}"`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      setInvitationSent(true);
+    } catch (error) {
+      console.error("Błąd dodawania znajomego:", error);
+    }
+  };
+  
+
+  const handleRemoveFriend = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`/Friends/removeFriend/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserData((prev) => ({ ...prev, isFriend: false }));
+    } catch (error) {
+      console.error("Błąd usuwania znajomego:", error);
+    }
+  };
 
   if (!userData) {
     return (
@@ -68,14 +100,14 @@ const UserProfilePopup = ({ username, onClose }) => {
     rocketSkin,
     streak,
     maxStreak,
-    exercisesCompleted
+    exercisesCompleted,
+    isFriend,
   } = userData;
 
   return (
     <Popup onClose={onClose}>
       <div className="user-profile-popup">
         <div className="user-info-container">
-
           <div className="user-left">
             <div className="user-upper">
               <div className="user-avatar-wrapper">
@@ -92,15 +124,25 @@ const UserProfilePopup = ({ username, onClose }) => {
             </div>
 
             <div className="user-buttons">
-              <button className="friend-button">+ Dodaj do znajomych</button>
-              {/*<button className="mutual-button">Sprawdź wspólnych znajomych</button>*/}
+              {isFriend ? (
+                <button className="friend-button-r" onClick={handleRemoveFriend}>
+                  − Usuń ze znajomych
+                </button>
+              ) : invitationSent ? (
+                <p style={{ color: "lightgreen", fontSize: "1.3vh", fontFamily: "Orbitron" }}>
+                  ✅ Wysłano zaproszenie
+                </p>
+              ) : (
+                <button className="friend-button" onClick={handleAddFriend}>
+                  + Dodaj do znajomych
+                </button>
+              )}
             </div>
           </div>
 
           <div className="user-rocket-section">
             <img src={rocketImages[rocketSkin]} alt="rakieta" className="user-rocket" />
           </div>
-
         </div>
       </div>
     </Popup>
