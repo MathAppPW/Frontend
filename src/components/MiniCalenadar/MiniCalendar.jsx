@@ -1,59 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MiniCalendar.css";
+import axios from "axios";
 
 const customWeekdays = ["PN", "WT", "ŚR", "CZ", "PT", "S", "N"];
 
 function MiniCalendar() {
-  const [currentDate, setCurrentDate] = useState(new Date()); // Domyślnie obecny miesiąc
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [markedRanges, setMarkedRanges] = useState([]);
 
-  // Zakres zaznaczonych dni
-  const markedRanges = [
-    { start: new Date(2024, 11, 3), end: new Date(2024, 11, 3) },
-    { start: new Date(2024, 11, 6), end: new Date(2024, 11, 10) },
-    { start: new Date(2025, 2, 10), end: new Date(2025, 2, 15) },
-  ];
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+  
+    axios.get("/Streak/callendar", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "text/plain"
+      }
+    })
+    .then((res) => {
+      const parsed = res.data;
+    
+      if (!Array.isArray(parsed)) {
+        return;
+      }
+    
+      const converted = parsed.map((item) => ({
+        start: new Date(item.start),
+        end: new Date(item.end)
+      }));
+    
+      setMarkedRanges(converted);
+    })    
+  }, []);
+  
+  
 
-  // Funkcja do sprawdzania, czy dzień jest w zaznaczonym zakresie
   const isInRange = (date, range) => {
     return date >= range.start && date <= range.end;
   };
 
-  // Funkcja do generowania dni w miesiącu
   const getDaysInMonth = (year, month) => {
     const days = [];
-    const firstDay = new Date(year, month, 1).getDay() || 7; // Dopasowanie dla poniedziałku
+    const firstDay = new Date(year, month, 1).getDay() || 7;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Dodawanie pustych miejsc na dni przed pierwszym dniem miesiąca
     for (let i = 1; i < firstDay; i++) {
       days.push(null);
     }
 
-    // Dodawanie dni miesiąca
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       days.push({
         day: i,
-        isToday:
-          date.toDateString() === new Date().toDateString(), // Sprawdzanie, czy to obecny dzień
-        isHighlighted: markedRanges.some(range => isInRange(date, range)),
+        isToday: date.toDateString() === new Date().toDateString(),
+        isHighlighted: markedRanges.some((range) => isInRange(date, range)),
       });
     }
 
     return days;
   };
 
-  // Funkcja zmiany miesiąca
   const changeMonth = (offset) => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() + offset, 1)
     );
   };
 
-  const days = getDaysInMonth(
-    currentDate.getFullYear(),
-    currentDate.getMonth()
-  );
+  const days = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
 
   return (
     <div className="mini-calendar">
@@ -77,9 +90,7 @@ function MiniCalendar() {
           day ? (
             <div
               key={index}
-              className={`day ${
-                day.isToday ? "today" : day.isHighlighted ? "highlighted" : ""
-              }`}
+              className={`day${day.isToday ? " today" : ""}${day.isHighlighted ? " highlighted" : ""}`}
             >
               {day.day}
             </div>

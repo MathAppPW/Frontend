@@ -17,7 +17,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.5vh;
+    font-size: min(1.5vh, 1.2vw);
     color: #FF4C8B;
     font-weight: bold;
     margin-bottom: 1.2vh;
@@ -28,7 +28,7 @@
     background: none;
     border: none;
     color: #FF4C8B;
-    font-size: 1.5vh;
+    font-size: min(1.5vh, 1.2vw);
     font-weight: bold;
     cursor: pointer;
   }
@@ -36,7 +36,7 @@
   .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    font-size: 1.2vh;
+    font-size: min(1.2vh, 0.7vw);
     color: #FF4C8B;
     margin-bottom: 4px;
   }
@@ -54,12 +54,15 @@
   
   .day {
     text-align: center;
-    padding: 4px;
+    padding-left: 0.1vw;
+    padding-right: 0.1vw;
+    padding-top: 4px;
+    padding-bottom: 4px;
     margin: 0;
     border-radius: 5px;
     color: #FFFFFF;
     background-color: transparent;
-    font-size: 1.2vh;
+    font-size: min(1.2vh, 0.7vw);
     position: relative;
   }
   
