@@ -1,5 +1,5 @@
 const initialState = {
-  userName: "Kornelia",
+  userName: "Nieznany",
   profilePicture: null,
   rocketSkin: null,
   level: 1,

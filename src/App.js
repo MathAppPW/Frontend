@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Friends from "./pages/Friends.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Rank from "./pages/Rank.jsx"
+import NotificationsPage from "./pages/NotificationsPage.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -79,6 +80,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Rank/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/powiadomienia"
+          element={
+            <ProtectedRoute>
+              <NotificationsPage/>
             </ProtectedRoute>
           }
         />

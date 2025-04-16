@@ -149,12 +149,12 @@
     background-color: #1a084e;
     font-family: 'Orbitron', sans-serif;
     color: white;
-    font-size: 1.9vh;
+    font-size: 1.8vh;
     text-align: left;
 
     margin-top: 1.5vh;
     padding: 0.6vh 0.6vw;
-    padding-left: 1vw;
+    padding-left: 0.6vw;
     width: 12vw;
 
     border: 0.2vh solid hsla(0, 0%, 80%, 0.87);
