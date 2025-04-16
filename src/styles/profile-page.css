@@ -403,6 +403,11 @@
     text-align: center;
 }
 
+.avatar-image.locked-image {
+    filter: brightness(40%);
+    pointer-events: none;
+  }  
+
 .ship-container {
     display: flex;
     gap: 30px;
@@ -439,6 +444,11 @@
     font-weight: bold;
     text-align: center;
 }
+
+.ship-image.locked-image {
+    filter: brightness(40%);
+    pointer-events: none;
+  }
 
 .avatar-name.selected,
 .ship-name.selected {
