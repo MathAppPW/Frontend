@@ -25,6 +25,7 @@ const ConfirmDeletePopup = ({ onClose }) => {
 
       if (!response.ok) {
         setError("Niepoprawne hasło.");
+        return;
       }
 
       localStorage.removeItem("accessToken");

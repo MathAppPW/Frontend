@@ -338,14 +338,12 @@ const ProfileContent = () => {
       {isEditOpen && (
         <EditPopup
           username={userData.username}
-          email={userData.email}
           onClose={() => {
             setEditOpen(false);
             setErrorMessage("");
             setPendingChanges({ newUsername: null, newEmail: null, newPassword: null });
           }}
           onNameEdit={() => setNameChangeOpen(true)}
-          onEmailEdit={() => setEmailChangeOpen(true)}
           onPasswordEdit={() => setPasswordChangeOpen(true)}
           onDeleteConfirm={() => setDeleteConfirmOpen(true)}
           onSave={handleApplyChanges}
