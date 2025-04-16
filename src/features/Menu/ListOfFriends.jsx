@@ -34,9 +34,10 @@ const ListOfFriends = () => {
     const [searchedFriend, setSearchedFriend] = useState(null);
     const [searchError, setSearchError] = useState(null);
     const [showUserPopup, setShowUserPopup] = useState(false);
+    const [showSearchUserPopup, setShowSearchUserPopup] = useState(false);
 
     useEffect(() => {
-        axios.get("/Friend/friends", getAuthHeader())
+        axios.get("/Friends/friends", getAuthHeader())
             .then(res => {setFriends(res.data); setSearchError(false);})
             .catch(err => console.error(err));
     }, []);
@@ -88,7 +89,7 @@ const ListOfFriends = () => {
 
                 <div className="friends-container">
                     {[...Array(20)].map((_, i) => (
-                        <div className="one-friend-container" key={i}>
+                        <div className="one-friend-container" key={i}  onClick={() => setShowUserPopup(true)}>
                             <img className="one-friend-profile-picture" src={profileImages[i % 10]} />
                             <p className="friend-userName"> username {i + 1}</p>
                             <div className="firnds-onfo-container">
@@ -100,7 +101,16 @@ const ListOfFriends = () => {
 
                             </div>
                             <img className="frind-rocket" src={rocketImages[i % 5]} />
+                        
+                            {showUserPopup && (
+                                <UserProfilePopup
+                                    username="!Nela123"
+                                    onClose={() => setShowUserPopup(false)}
+                
+                                />
+                            )}
                         </div>
+                        
                     ))}
 
                 </div>
@@ -121,7 +131,7 @@ const ListOfFriends = () => {
 
                 {searchedFriend && (
                     <div className="searched-friend-container">
-                        <div className="one-friend-container searched-one-friend-container" onClick={() => setShowUserPopup(true)}>
+                        <div className="one-friend-container searched-one-friend-container" onClick={() => setShowSearchUserPopup(true)}>
                             <img
                                 className="one-friend-profile-picture"
                                 src={profileImages[searchedFriend.profileSkin]}
@@ -144,10 +154,10 @@ const ListOfFriends = () => {
 
             </div>
 
-            {showUserPopup && (
+            {showSearchUserPopup && (
                 <UserProfilePopup
                     username={searchedFriend.username}
-                    onClose={() => setShowUserPopup(false)}
+                    onClose={() => setShowSearchUserPopup(false)}
 
                 />
             )}

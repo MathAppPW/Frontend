@@ -96,8 +96,8 @@ function LeftBarMainMenu(props) {
           <button onClick={() => navigate("/profile")} className="button-main-menu">
             <span className="material-icons">person</span> Profil
           </button>
-          <button className="button-main-menu">
-            <span className="material-icons" >settings</span> Ustawienia
+          <button onClick={() => navigate("/powiadomienia")} className="button-main-menu">
+            <span className="material-icons" >notifications</span> Powiadomienia
           </button>
         </div>
 

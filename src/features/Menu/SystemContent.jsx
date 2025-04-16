@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Bacground from "../Bacground/Bacground.jsx";
+import BacgroundTwo from "../Bacground/BacgroundTwo.jsx";
 
 const lessonColors = {
   1: "#A020F0", // Fioletowy
@@ -95,7 +95,7 @@ const SystemMenuPage = () => {
 
   return (
     <div className="main-content-contener">
-      <Bacground />
+      <BacgroundTwo/>
 
       {/* Strzałka do góry */}
       <div
