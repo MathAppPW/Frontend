@@ -4,11 +4,9 @@ import Popup from "../Popup";
 const EditPopup = ({
   onClose,
   onNameEdit,
-  onEmailEdit,
   onPasswordEdit,
   onDeleteConfirm,
   username,
-  email,
   onSave,
   pendingChanges,
   errorMessage,
@@ -22,14 +20,6 @@ const EditPopup = ({
             <span className="edit-value">{pendingChanges.newUsername || username}</span>
           </div>
           <button className="edit-button" onClick={onNameEdit}>Edytuj</button>
-        </div>
-
-        <div className="edit-field">
-          <div className="edit-label-value">
-            <span className="edit-label">Adres e-mail:</span>
-            <span className="edit-value">{pendingChanges.newEmail || email}</span>
-          </div>
-          <button className="edit-button" onClick={onEmailEdit}>Edytuj</button>
         </div>
 
         <div className="edit-field">

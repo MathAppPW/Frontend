@@ -9,25 +9,34 @@ const ShipPopup = ({
   onSave,
   onClose
 }) => {
+  const unlockedShips = [true, false, false, false, false];
+
   return (
     <Popup title="Zmiana statku" onClose={onClose}>
       <div className="ship-container">
-        {Object.entries(ships).map(([key, src], i) => (
-          <div
-            key={key}
-            className="ship-box"
-            onClick={() => setSelectedShipId(Number(key))}
-          >
-            <img src={src} alt={shipNames[i]} className="ship-image" />
-            <span
-              className={`ship-name ${
-                selectedShipId === Number(key) ? "selected" : ""
-              }`}
+        {Object.entries(ships).map(([key, src], i) => {
+          const isUnlocked = unlockedShips[i];
+          return (
+            <div
+              key={key}
+              className="ship-box"
+              onClick={() => isUnlocked && setSelectedShipId(Number(key))}
             >
-              {shipNames[i]}
-            </span>
-          </div>
-        ))}
+              <img
+                src={src}
+                alt={shipNames[i]}
+                className={`ship-image ${!isUnlocked ? "locked-image" : ""}`}
+              />
+              <span
+                className={`ship-name ${
+                  selectedShipId === Number(key) ? "selected" : ""
+                }`}
+              >
+                {shipNames[i]}
+              </span>
+            </div>
+          );
+        })}
       </div>
       <button className="profile-save-button" onClick={onSave}>
         Zapisz zmiany
