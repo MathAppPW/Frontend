@@ -285,6 +285,13 @@
     border-bottom-left-radius: 0.7vh;
 }
 
+.heal-timer {
+    font-size: 0.85rem;
+    color: #ff4c8b;
+    margin-top: 5px;
+    text-align: center;
+  }
+
 /* środek menu */
 
 .main-content-contener {
@@ -475,24 +482,56 @@
     height: 1.5vh;
 }
 
+.search-friend-section{
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: row;
+    gap: 2vw;
+}
+
 
 .search-friends {
-    margin-top: 2vh;
+    
     height: 3.5vh;
     width: 17.7vw;
-
-    border: 0.15vh solid white;
+    border: 0.2vh solid #eb7da4;
     border-radius: 1.1vh;
     background-color: rgba(255, 255, 255, 0.101);
     color: white;
+    padding-left: 0.5vw;
+    font-size: 1.2vh;
 }
 
+.search-button{
+    margin-top: 0.2vh;
+    width: 3.5vw;
+    height: 3vh;
+    background-color: #f198b79d;
+    border-radius: 0.8vh;
+    border: solid 0.2vh white;
+    color: white;
+
+}
 .searched-friend-container {
     height: 8vh;
     width: 40vw;
     margin-top: 2vh;
     padding: 0;
     padding-left: 0.5vw;
+}
+
+.searched-one-friend-container{
+    border: solid  0.3vh #f198b7;
+    margin-left: -0.2vw;;
+}
+
+.search-error{
+    margin-top: 3.5vh;
+    font-size: 2.2vh;
+    color: #ffbfd5;
+    
 }
 
 
