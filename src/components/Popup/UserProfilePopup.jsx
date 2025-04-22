@@ -59,10 +59,9 @@ const UserProfilePopup = ({ username, onClose }) => {
   const handleAddFriend = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.post("/Friends/new", `"${username}"`, {
+      await axios.post(`/Friends/new/${username}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
       });
       setInvitationSent(true);
