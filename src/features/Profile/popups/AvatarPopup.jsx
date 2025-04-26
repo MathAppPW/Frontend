@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "../Popup";
+import axios from "axios";
 
 const AvatarPopup = ({
   avatars,
@@ -9,10 +10,32 @@ const AvatarPopup = ({
   onSave,
   onClose
 }) => {
-  const unlockedAvatars = [
-    true, true, false, false, false,
-    false, false, false, false, false
-  ];
+  const [unlockedAvatars, setUnlockedAvatars] = useState(
+    new Array(10).fill(false)
+  );
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    axios.get("/Achievements/avatar", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "text/plain"
+      }
+    })
+    .then((res) => {
+      const data = res.data;
+      //console.log("Osiągnięcia awatara:", data.isUnlocked);
+      if (data.isUnlocked && Array.isArray(data.isUnlocked)) {
+        setUnlockedAvatars(data.isUnlocked);
+      } else {
+        console.warn("Nieprawidłowy format danych:", data);
+      }
+    })
+    .catch((err) => {
+      console.error("Błąd pobierania osiągnięć awatara:", err);
+    });
+  }, []);
 
   return (
     <Popup title="Zmiana awatara" onClose={onClose}>

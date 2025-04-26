@@ -1,151 +1,195 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BacgroundTwo from "../Bacground/BacgroundTwo.jsx";
+import axios from "axios";
 
 const lessonColors = {
-  1: "#A020F0", // Fioletowy
-  2: "#FF0000", // Czerwony
-  3: "#00FF00", // Zielony
-  4: "#FFA500", // Pomarańczowy
+  1: "#A020F0", // fioletowy
+  2: "#FF0000", // czerwony
+  3: "#00FF00", // zielony
+  4: "#FFA500", // pomarańczowy
+  5: "#0000FF", // niebieski
+  6: "#FF69B4", // różowy
 };
-
-const lessonData = [
-  "01010125", "01020250", "01030375", "01040400",
-  "02010150", "02020230", "02030370", "02040490",
-  "03010110", "03020240", "03030380", "03040420",
-  "04010160", "04020215", "04030390", "04040700",
-  "05010100", "05020100", "05030100", "05040100",
-];
 
 const taskPositions = [
-  [0, 0], // Wykrzyknik
+  [0, 0],
   [0, -90], [80, -43], [80, 43],
-  [0, 90], [-80, 43], [-80, -43]
+  [0, 90], [-80, 43], [-80, -43],
 ];
 
-const offset = 30; // Skrócenie linii
-
-const parseProgressData = (data, currentSection) => {
-  return data.reduce((acc, entry) => {
-    const section = entry.substring(0, 2);
-    if (section !== String(currentSection).padStart(2, '0')) return acc;
-    
-    const lesson = entry.substring(2, 4);
-    const task = entry.substring(4, 6);
-    const progress = parseInt(entry.substring(6, 8), 10);
-    
-    if (!acc[lesson]) {
-      acc[lesson] = { task, progress };
-    }
-    return acc;
-  }, {});
-};
-
-const calculateLineCoords = (x1, y1, x2, y2) => {
-  const angle = Math.atan2(y2 - y1, x2 - x1);
+const offset = 30;
+const cut = (x1, y1, x2, y2) => {
+  const a = Math.atan2(y2 - y1, x2 - x1);
   return {
-    x1: x1 + Math.cos(angle) * offset,
-    y1: y1 + Math.sin(angle) * offset,
-    x2: x2 - Math.cos(angle) * offset,
-    y2: y2 - Math.sin(angle) * offset,
+    x1: x1 + Math.cos(a) * offset,
+    y1: y1 + Math.sin(a) * offset,
+    x2: x2 - Math.cos(a) * offset,
+    y2: y2 - Math.sin(a) * offset,
   };
 };
 
-const SystemMenuPage = () => {
+export default function SystemMenuPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const currentSection = parseInt(searchParams.get("section")) || 1;
-  const [currentLesson, setCurrentLesson] = useState(1);
-  
-  const parsedData = parseProgressData(lessonData, currentSection);
-  const lessonKeys = Object.keys(parsedData);
-  const totalLessons = lessonKeys.length;
+  const chapter = new URLSearchParams(useLocation().search).get("section");
 
-  const handleScroll = (direction) => {
-    setCurrentLesson((prev) => {
-      const index = lessonKeys.indexOf(prev.toString().padStart(2, '0'));
-      if (direction === "up" && index > 0) return parseInt(lessonKeys[index - 1]);
-      if (direction === "down" && index < lessonKeys.length - 1) return parseInt(lessonKeys[index + 1]);
-      return prev;
-    });
-  };
+  const [map, setMap] = useState({});
+  const [keys, setKeys] = useState([]);
+  const [curIndex, setCurIndex] = useState(0);
 
   useEffect(() => {
-    const handleWheel = (event) => {
-      if (event.deltaY > 0) {
-        handleScroll("down");
-      } else if (event.deltaY < 0) {
-        handleScroll("up");
+    if (!chapter) return;
+
+    const token = localStorage.getItem("accessToken");
+
+    console.log("Wysyłam zapytanie GET na:", `/Progress/subjects/${chapter}`);
+
+    axios.get(`/Progress/subjects/${chapter}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "text/plain",
       }
-    };
-    window.addEventListener("wheel", handleWheel);
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-    };
-  }, [lessonKeys]);
+    })
+    .then(res => {
+      const raw = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
+      console.log("Odpowiedź z serwera:", raw);
 
-  const handleClick = (task) => {
-    navigate(`/task?section=${currentSection}&lesson=${currentLesson}&task=${task}`);
+      const m = {};
+      const titles = Object.keys(raw.progress ?? {});
+
+      titles.forEach((title, idx) => {
+        const v = raw.progress[title];
+        const task = Math.min(v.currentLesson ?? 1, 7);
+        const progress = (v.seriesAll ?? 0)
+          ? Math.round((v.seriesCompleted / v.seriesAll) * 100)
+          : 0;
+
+        m[title] = {
+          task: task,
+          progress,
+          color: lessonColors[(idx % 6) + 1] || "gray",
+        };
+      });
+
+      /* ───── DODAJEMY TEMAT TESTOWY ───── */
+      /*
+      m["Testowy temat"] = {
+        task: 2,          // pierwszy task aktywny
+        progress: 1,         // 0% ukończenia
+        color: "#00CED1",    // turkusowy
+      };
+      titles.push("Testowy temat");
+      */
+      /* ───────────────────────────────── */
+
+      setMap(m);
+      setKeys(titles);
+      setCurIndex(0);
+    })
+    .catch(e => console.error("Błąd pobierania lessons:", e));
+  }, [chapter]);
+
+  /* ----------- scrollowanie ----------- */
+  const scroll = dir => setCurIndex(prev => {
+    if (dir === "up" && prev > 0) return prev - 1;
+    if (dir === "down" && prev < keys.length - 1) return prev + 1;
+    return prev;
+  });
+
+  useEffect(() => {
+    const onWheel = e => scroll(e.deltaY > 0 ? "down" : "up");
+    window.addEventListener("wheel", onWheel);
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [keys]);
+
+  /* ----------- kliknięcia ----------- */
+  const goTask = (taskNum) => {
+    const lessonName = keys[curIndex];
+    navigate(`/task?section=${chapter}&lesson=${lessonName}&task=${taskNum}`);
   };
 
-  const handleInfoClick = () => {
-    navigate(`/info?section=${currentSection}&lesson=${currentLesson}`);
+  const goInfo = () => {
+    const lessonName = keys[curIndex];
+    navigate(`/info?section=${chapter}&lesson=${lessonName}`);
   };
+
+  /* ----------- render ----------- */
+  const title = keys[curIndex] ? keys[curIndex].replaceAll("_", " ") : "Wczytywanie..."; // tutaj zamieniamy _ na spację
+  const d = map[keys[curIndex]] || {};
+  const currentColor = d.color || "gray";
 
   return (
     <div className="main-content-contener">
-      <BacgroundTwo/>
+      <BacgroundTwo />
 
-      {/* Strzałka do góry */}
+      {/* strzałka ↑ */}
       <div
-        className={`main-content-arrow main-content-up-arrow ${currentLesson === parseInt(lessonKeys[0]) ? "hidden" : ""}`}
-        onClick={currentLesson > parseInt(lessonKeys[0]) ? () => handleScroll("up") : undefined}
+        className={`main-content-arrow main-content-up-arrow ${curIndex === 0 ? "hidden" : ""}`}
+        onClick={curIndex > 0 ? () => scroll("up") : undefined}
         style={{ position: "absolute", top: "5%", left: "50%", transform: "translateX(-50%)" }}
       />
 
-      {/* Nagłówek z numerem lekcji */}
-      <h2 className="main-content-section" style={{ position: "absolute", top: "12%", left: "50%", transform: "translateX(-50%)" }}>
-      {currentLesson}  Pierwiastek dowolnego stopnia 
+      {/* nagłówek */}
+      <h2 className="main-content-section"
+          style={{ position: "absolute", top: "12%", left: "50%", transform: "translateX(-50%)" }}>
+        {title}
       </h2>
 
-      {/* Połączenia między kółkami */}
-      <svg style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%) scale(2)", width: "300px", height: "300px" }}>
-        {taskPositions.slice(1).map(([x1, y1], index) => {
-          const [x2, y2] = taskPositions[index];
-          const { x1: x1Adj, y1: y1Adj, x2: x2Adj, y2: y2Adj } = calculateLineCoords(x1, y1, x2, y2);
+      {/* linie */}
+      <svg
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "52%",
+          transform: "translate(-50%, -50%) scale(2)",
+          width: 300,
+          height: 300,
+        }}
+      >
+        {taskPositions.slice(1).map(([x1, y1], i) => {
+          const [x2, y2] = taskPositions[i];
+          const { x1: xa, y1: ya, x2: xb, y2: yb } = cut(x1, y1, x2, y2);
 
-          const taskData = parsedData[currentLesson.toString().padStart(2, '0')];
-          const isCurrentTask = taskData?.task === String(index + 1).padStart(2, '0');
-          const isCompleted = parseInt(taskData?.task) > index + 1;
-          const lineColor = isCurrentTask || isCompleted ? lessonColors[currentLesson] || "gray" : "rgba(100, 100, 100, 0.5)";
+          const on = d.task === (i + 1);
+          const ok = (d.task || 1) > i + 1;
+          const c = on || ok ? currentColor : "rgba(100,100,100,.5)";
 
           return (
             <line
-              key={index}
-              x1={x1Adj + 150} y1={y1Adj + 150}
-              x2={x2Adj + 150} y2={y2Adj + 150}
-              stroke={lineColor}
+              key={i}
+              x1={xa + 150}
+              y1={ya + 150}
+              x2={xb + 150}
+              y2={yb + 150}
+              stroke={c}
               strokeWidth="3"
             />
           );
         })}
       </svg>
 
-      {/* Kółka z zadaniami */}
-      <div className="lesson-graph" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%) scale(2)" }}>
-        {["!", ...Array(6).keys().map(i => i + 1)].map((taskNum, index) => {
-          const taskData = parsedData[currentLesson.toString().padStart(2, '0')];
-          const isCurrentTask = taskNum !== "!" && taskData?.task === String(taskNum).padStart(2, '0');
-          const isCompleted = taskNum === "!" || (taskNum !== "!" && parseInt(taskData?.task) > taskNum);
-          const progress = isCurrentTask ? taskData.progress : (isCompleted ? 100 : 0);
-          const [x, y] = taskPositions[index];
+      {/* kółka */}
+      <div
+        className="lesson-graph"
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "52%",
+          transform: "translate(-50%, -50%) scale(2)",
+        }}
+      >
+        {["!", ...Array(6).fill(0).map((_, i) => i + 1)].map((n, idx) => {
+          const isTask = n !== "!";
+          const on = isTask && d.task === n;
+          const ok = !isTask || (d.task || 1) > n;
+          const pct = on ? d.progress : (ok ? 100 : 0);
+          const [x, y] = taskPositions[idx];
 
           return (
             <div
-              key={taskNum}
-              className={`task-circle ${isCurrentTask || isCompleted ? "clickable" : "disabled"}`}
-              onClick={taskNum === "!" ? handleInfoClick : (isCurrentTask ? () => handleClick(taskNum) : undefined)}
+              key={n}
+              className={`task-circle ${on || ok ? "clickable" : "disabled"}`}
+              onClick={n === "!" ? goInfo : on ? () => goTask(n) : undefined}
               style={{
                 position: "absolute",
                 left: `${x}px`,
@@ -157,7 +201,7 @@ const SystemMenuPage = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                border: `3px solid ${lessonColors[currentLesson] || "gray"}`,
+                border: `3px solid ${currentColor}`,
                 padding: "5px",
                 backgroundClip: "content-box",
               }}
@@ -168,25 +212,25 @@ const SystemMenuPage = () => {
                   width: "100%",
                   height: "100%",
                   borderRadius: "50%",
-                  background: `conic-gradient(${lessonColors[currentLesson] || "gray"} ${progress}%, transparent ${progress}%)`,
+                  background: `conic-gradient(${currentColor} ${pct}%, transparent ${pct}%)`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                {taskNum === "!" ? "!" : isCompleted ? "✓" : taskNum}
+                {n === "!" ? "!" : ok ? "✓" : n}
               </div>
             </div>
           );
         })}
       </div>
+
+      {/* strzałka ↓ */}
       <div
-        className={`main-content-arrow main-content-down-arrow ${currentLesson === Math.max(...lessonKeys.map(l => parseInt(l))) ? "hidden" : ""}`}
-        onClick={currentLesson < Math.max(...lessonKeys.map(l => parseInt(l))) ? () => handleScroll("down") : undefined}
+        className={`main-content-arrow main-content-down-arrow ${curIndex === keys.length - 1 ? "hidden" : ""}`}
+        onClick={curIndex < keys.length - 1 ? () => scroll("down") : undefined}
         style={{ position: "absolute", bottom: "5%", left: "50%", transform: "translateX(-50%)" }}
       />
     </div>
   );
-};
-
-export default SystemMenuPage;
+}

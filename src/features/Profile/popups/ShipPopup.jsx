@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "../Popup";
+import axios from "axios";
 
 const ShipPopup = ({
   ships,
@@ -9,7 +10,30 @@ const ShipPopup = ({
   onSave,
   onClose
 }) => {
-  const unlockedShips = [true, false, false, false, false];
+  const [unlockedShips, setUnlockedShips] = useState(new Array(5).fill(false));
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    axios.get("/Achievements/rocket", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "text/plain"
+      }
+    })
+    .then((res) => {
+      const data = res.data;
+      //console.log("Osiągnięcia statku:", data.isUnlocked);
+      if (data.isUnlocked && Array.isArray(data.isUnlocked)) {
+        setUnlockedShips(data.isUnlocked);
+      } else {
+        console.warn("Nieprawidłowy format danych:", data);
+      }
+    })
+    .catch((err) => {
+      console.error("Błąd pobierania osiągnięć rakiety:", err);
+    });
+  }, []);
 
   return (
     <Popup title="Zmiana statku" onClose={onClose}>
