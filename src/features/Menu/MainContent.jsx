@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BacgroundTwo from "../../features/Bacground/BacgroundTwo.jsx";
+import axios from "axios";
 
 import Galactic1 from "../../assets/images/galctics/1.gif";
 import Galactic2 from "../../assets/images/galctics/2.gif";
@@ -8,30 +9,55 @@ import Galactic3 from "../../assets/images/galctics/3.gif";
 import Galactic4 from "../../assets/images/galctics/4.gif";
 import Galactic5 from "../../assets/images/galctics/5.gif";
 
-const sectionsCount = 5;
+const fallbackTitles = [
+  "Dział 1", "Dział 2", "Dział 3", "Dział 4", "Dział 5",
+];
+
+const fallbackImages = [
+  Galactic1, Galactic2, Galactic3, Galactic4, Galactic5,
+];
 
 const MainMenuPage = () => {
-  const galaxies = [
-    { name: "Wyrażenia algebraiczne", image: Galactic1 },
-    { name: "Funkcja liniowa", image: Galactic2 },
-    { name: "Funkcja kwadratowa", image: Galactic3 },
-    { name: "Ciągi liczbowe", image: Galactic4 },
-    { name: "Planimetria", image: Galactic5 },
-  ];
-
-  const [currentSection, setCurrentSection] = useState(1);
+  const [chapters, setChapters] = useState([]);
+  const [currentSection, setCurrentSection] = useState(0);
   const navigate = useNavigate();
- 
-  
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    axios.get("/Progress/chapters", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "text/plain"
+      }
+    })
+    .then((res) => {
+      const parsed = res.data;
+      console.log("Pobrany postęp:", parsed);
+      const entries = Object.entries(parsed.progress);
+      const dynamicChapters = entries.map(([key, value], index) => ({
+        id: key,
+        name: key.replaceAll("_", " ") || fallbackTitles[index],
+        completed: value.subjectsCompleted,
+        all: value.subjectsAll,
+        image: fallbackImages[index % fallbackImages.length]
+      }));      
+
+      setChapters(dynamicChapters);
+      setCurrentSection(0);
+    })
+    .catch((err) => {
+      console.error("Błąd pobierania postępu:", err);
+    });
+  }, []);
 
   const handleScroll = (direction) => {
     setCurrentSection((prev) => {
-      if (direction === "up" && prev > 1) return prev - 1;
-      if (direction === "down" && prev < sectionsCount) return prev + 1;
+      if (direction === "up" && prev > 0) return prev - 1;
+      if (direction === "down" && prev < chapters.length - 1) return prev + 1;
       return prev;
     });
   };
-
 
   const handleWheel = (event) => {
     if (event.deltaY > 0) {
@@ -43,39 +69,47 @@ const MainMenuPage = () => {
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel);
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-    };
-  }, []);
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [chapters]);
 
-  const handleGalaxyClick = (sectionNumber) => {
-    navigate(`/system?section=${sectionNumber}`);
-  };
+  const handleGalaxyClick = (chapterId) => {
+    navigate(`/system?section=${chapterId}`);
+  };  
 
-  const currentGalaxy = galaxies[currentSection - 1];
-
+  const currentChapter = chapters[currentSection];
 
   return (
     <div className="main-content-contener">
-      
-      <BacgroundTwo/>
-        <div
-        className={`main-content-arrow main-content-up-arrow ${currentSection === 1 ? "hidden" : ""}`}
-        onClick={currentSection > 1 ? () => handleScroll("up") : undefined}
-        />
-            <h2 className="main-content-section">  {currentGalaxy.name}</h2>
-            <img
-            className="main-content-galactic"
-            src={currentGalaxy.image}
-            alt="Galaktyka"
-            onClick={() => handleGalaxyClick(currentSection)}
-            />
-            <h2 className="main-content-number">Ukończono: 1/5</h2>
+      <BacgroundTwo />
 
-        <div
-        className={`main-content-arrow main-content-down-arrow ${currentSection === sectionsCount ? "hidden" : ""}`}
-        onClick={currentSection < sectionsCount ? () => handleScroll("down") : undefined}
-        />
+      <div
+        className={`main-content-arrow main-content-up-arrow ${currentSection === 0 ? "hidden" : ""}`}
+        onClick={currentSection > 0 ? () => handleScroll("up") : undefined}
+      />
+
+      {currentChapter ? (
+        <>
+          <h2 className="main-content-section">{currentChapter.name}</h2>
+
+          <img
+            className="main-content-galactic"
+            src={currentChapter.image}
+            alt="Galaktyka"
+            onClick={() => handleGalaxyClick(currentChapter.id)}
+          />
+
+          <h2 className="main-content-number">
+            Ukończono: {currentChapter.completed}/{currentChapter.all}
+          </h2>
+        </>
+      ) : (
+        <h2 className="main-content-number">Wczytywanie...</h2>
+      )}
+
+      <div
+        className={`main-content-arrow main-content-down-arrow ${currentSection === chapters.length - 1 ? "hidden" : ""}`}
+        onClick={currentSection < chapters.length - 1 ? () => handleScroll("down") : undefined}
+      />
     </div>
   );
 };

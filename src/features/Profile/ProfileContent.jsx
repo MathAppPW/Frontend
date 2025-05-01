@@ -193,7 +193,7 @@ const ProfileContent = () => {
     axios.get("/History/days", getAuthHeader())
       .then(res => {
         const data = res.data.days;
-        //const data = generateTestData();
+        //npmconst data = generateTestData();
         setAllData(data);
         const totalSecs = data.reduce((sum, d) => sum + d.secondsSpent, 0);
         const totalEx = data.reduce((sum, d) => sum + d.exercisesCount, 0);

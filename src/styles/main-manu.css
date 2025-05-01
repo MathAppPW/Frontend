@@ -238,8 +238,8 @@
 }
 
 .space-ship {
-    height: 33vh;
-    width: 9vw;
+    height: auto;
+    width: min(9vw, 200px);
     margin-bottom: 3vh;
 }
 
@@ -324,6 +324,7 @@
 
 .main-content-section {
     margin-top: 2vh;
+    text-align: center;
 }
 
 .main-content-galactic {
