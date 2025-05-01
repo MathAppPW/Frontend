@@ -638,3 +638,55 @@
     margin-right: 3vw;
     color: #2bf8d6;
 }
+
+/*powiadomienia */
+
+.one-nofifcation-container {
+    background-color: rgba(255, 255, 255, 0.226);
+    min-height: 7vh;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0.2vh solid white;
+    border-radius: 1vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 1.6vh;
+}
+
+.notifi-button{
+    height: 4vh;
+    width: 3.5vw;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3vh;
+    border: 0.2vh solid hsl(0, 0%, 80%);
+    border-radius: 0.6vh;
+    cursor: pointer;
+    box-shadow: none;
+}
+.przyjmij{
+    background-color: #ad15f3;
+    
+}
+
+.odrzuc{
+    background-color: #fc641d;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.notifi-username{
+    font-size: 1.8vh;
+    color: #FB773C;
+    margin-left: 1.5vw;
+}
+.notifi-text{
+    font-size: 1.7vh;
+    color: white;
+    margin-left: 0.3vw;
+    margin-right: 5vw;
+    width: 16vw;
+}
