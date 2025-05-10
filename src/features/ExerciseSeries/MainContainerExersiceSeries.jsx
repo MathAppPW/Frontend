@@ -422,7 +422,7 @@ function MainContainerExersiceSeries() {
             </div>
 
             <div className="submit-box">
-              <button onClick={handleButtonClick} className="auth-button">
+              <button onClick={handleButtonClick} className="auth-button-task">
                 {buttonLabel}
               </button>
             </div>
