@@ -1,0 +1,89 @@
+.title {
+    font-family: "Orbitron", sans-serif;
+    font-size: 3vw;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.theory-box {
+    position: absolute;
+    padding: 4vh;
+    top: calc(3vw + 90px);
+    left: 20vw;
+    width: 60vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1b065b;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    border: 2px solid #ffffff;
+    gap: 2vh;
+    overflow: hidden;
+}
+
+.theory-box::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #ad15f3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 12px;
+  filter: blur(2rem);
+}
+
+.theory-box h2 {
+    font-size: 2vw;
+}
+
+.theory-box h3 {
+    font-size: 1.2vw;
+}
+
+.theory-box h2, h3 {
+    text-align: center;
+}
+
+.theory-exit-button {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    margin: 1vw;
+    cursor: pointer;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 4vh;
+}
+
+.theory-box-content {
+    font-size: 2vw;
+    overflow-y: auto;
+    padding-right: 1vw;
+    flex: 1;
+    z-index: 1;
+    margin-right: -20px;
+}
+
+.theory-box-content::-webkit-scrollbar {
+    width: 25px;
+}
+
+.theory-box-content::-webkit-scrollbar-thumb {
+    background-color: #ad15f3;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.theory-box-content::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    border: 1px solid white;
+}

@@ -71,7 +71,6 @@ export default function SystemMenuPage() {
         };
       });
 
-      /* ───── DODAJEMY TEMAT TESTOWY ───── */
       /*
       m["Testowy temat"] = {
         task: 2,          // pierwszy task aktywny
@@ -80,7 +79,6 @@ export default function SystemMenuPage() {
       };
       titles.push("Testowy temat");
       */
-      /* ───────────────────────────────── */
 
       setMap(m);
       setKeys(titles);
