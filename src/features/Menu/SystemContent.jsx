@@ -119,6 +119,7 @@ export default function SystemMenuPage() {
   return (
     <div className="main-content-contener">
       <BacgroundTwo />
+      <button className="system-exit-button" onClick={() => navigate(`/menu`)}>x</button>
 
       {/* strzałka ↑ */}
       <div

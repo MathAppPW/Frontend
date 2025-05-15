@@ -8,6 +8,7 @@ import Galactic2 from "../../assets/images/galctics/2.gif";
 import Galactic3 from "../../assets/images/galctics/3.gif";
 import Galactic4 from "../../assets/images/galctics/4.gif";
 import Galactic5 from "../../assets/images/galctics/5.gif";
+import Loading from "../../components/Loading/Loading.jsx";
 
 const fallbackTitles = [
   "Dział 1", "Dział 2", "Dział 3", "Dział 4", "Dział 5",
@@ -101,15 +102,15 @@ const MainMenuPage = () => {
           <h2 className="main-content-number">
             Ukończono: {currentChapter.completed}/{currentChapter.all}
           </h2>
+
+          <div
+            className={`main-content-arrow main-content-down-arrow ${currentSection === chapters.length - 1 ? "hidden" : ""}`}
+            onClick={currentSection < chapters.length - 1 ? () => handleScroll("down") : undefined}
+          />
         </>
       ) : (
-        <h2 className="main-content-number">Wczytywanie...</h2>
+        <Loading/>
       )}
-
-      <div
-        className={`main-content-arrow main-content-down-arrow ${currentSection === chapters.length - 1 ? "hidden" : ""}`}
-        onClick={currentSection < chapters.length - 1 ? () => handleScroll("down") : undefined}
-      />
     </div>
   );
 };

@@ -152,7 +152,7 @@
   align-items: center;
   gap: 1.5vw;
   margin-bottom: 4vh;
-  margin-top: -2vh;
+  margin-top: -1vh;
 }
 
 .close-icon {
@@ -170,6 +170,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  margin-top: -3px;
 }
 
 .exercise-progress {
@@ -189,11 +190,13 @@
 
 .heart-icon {
   font-size: 2vw;
+  margin-top: -6px;
 }
 
 .life-left {
   font-size: 2vw;
   color: #ff4c8b;
+  margin-top: -2px;
 }
 
 .exercise-content {
