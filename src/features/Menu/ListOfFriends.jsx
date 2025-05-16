@@ -38,7 +38,7 @@ const ListOfFriends = () => {
 
     useEffect(() => {
         axios.get("/Friends/friends", getAuthHeader())
-            .then(res => {setFriends(res.data); setSearchError(false);})
+            .then(res => { setFriends(res.data); setSearchError(false); })
             .catch(err => console.error(err));
     }, []);
 
@@ -68,6 +68,8 @@ const ListOfFriends = () => {
         axios
             .get(`/Search/search/${searchInput}`, getAuthHeader())
             .then((res) => {
+                console.log(" Odpowiedź z backendu (lista znajomych):", res.data);
+
                 setSearchedFriend({ ...res.data, username: searchInput });
                 setSearchError(null);
             })
@@ -84,12 +86,54 @@ const ListOfFriends = () => {
             <div className="list-of-friends-container">
                 <div className="header-container">
                     <p className="header-list-of-friends">Twoi znajomi</p>
-                    <p className="liczba-znaj">Masz 20 znajomych</p>
+                    <p className="liczba-znaj">Masz {friends.length} znajomych</p>
                 </div>
 
                 <div className="friends-container">
-                    {[...Array(20)].map((_, i) => (
-                        <div className="one-friend-container" key={i}  onClick={() => setShowUserPopup(true)}>
+                    {friends.length === 0 ? (
+                        <p>Nie masz jeszcze żadnych znajomych</p>
+                    ) : (
+                        friends.map((friend, index) => (
+                            <div
+                                className="one-friend-container"
+                                key={index}
+                                onClick={() => setShowUserPopup(friend.username)}
+                            >
+                                <img
+                                    className="one-friend-profile-picture"
+                                    src={profileImages[friend.avatarId]}
+                                />
+                                <p className="friend-userName">{friend.username}</p>
+                                <div className="firnds-onfo-container">
+                                    <p className="friend-level">Level: {friend.level}</p>
+                                    <div className="friend-streak-conainer">
+                                        <p className="friend-streak">
+                                            Streak: {friend.currentStreak.streak}
+                                        </p>
+                                        <img src={fire} className="fire-friend" />
+                                    </div>
+                                </div>
+                                <img
+                                    className="frind-rocket"
+                                    src={rocketImages[friend.rocketShipId]}
+                                />
+                            </div>
+                        ))
+                    )}
+
+                    {/* Popup tylko raz, jeśli showUserPopup ma wartość */}
+                    {showUserPopup && (
+                        <UserProfilePopup
+                            username={showUserPopup}
+                            onClose={() => setShowUserPopup(false)}
+                        />
+                    )}
+
+
+
+
+                    {/* {[...Array(20)].map((_, i) => (
+                        <div className="one-friend-container" key={i} onClick={() => setShowUserPopup(true)}>
                             <img className="one-friend-profile-picture" src={profileImages[i % 10]} />
                             <p className="friend-userName"> username {i + 1}</p>
                             <div className="firnds-onfo-container">
@@ -101,17 +145,11 @@ const ListOfFriends = () => {
 
                             </div>
                             <img className="frind-rocket" src={rocketImages[i % 5]} />
-                        
-                            {showUserPopup && (
-                                <UserProfilePopup
-                                    username="!Nela123"
-                                    onClose={() => setShowUserPopup(false)}
-                
-                                />
-                            )}
+
+                            
                         </div>
-                        
-                    ))}
+
+                    ))}*/}
 
                 </div>
                 <div className="header-list-of-friends header-list-of-friends" >Znajdź nowych znajomych </div>

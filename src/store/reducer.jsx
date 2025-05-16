@@ -9,12 +9,14 @@ const initialState = {
   secondsToHeal: 0,
   lastLivesUpdate: null,
   progress: 0,
+  notification: 0,
 };
 
 const SET_PROFILE = "SET_PROFILE";
 const SET_USERNAME = "SET_USERNAME";
 const SET_LIVES = "SET_LIVES";
 const SET_EXPERIENCE = "SET_EXPERIENCE";
+const SET_NOTIFICATION = "SET_NOTIFICATION";
 
 // akcja
 export function setUserProfile(profileData) {
@@ -48,6 +50,13 @@ export function setExperience(level, experience, progress) {
       experience,
       progress,
     },
+  };
+}
+
+export function setNotification(count) {
+  return {
+    type: SET_NOTIFICATION,
+    payload: count,
   };
 }
 
@@ -145,6 +154,37 @@ export function fetchExperience() {
   };
 }
 
+export function fetchNotifications() {
+  return async (dispatch) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.error("Brak tokenu!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/Friends/getPendingRequests`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Nie udało się pobrać powiadomień");
+      }
+
+      const data = await response.json();
+      const count = data.length;
+      dispatch(setNotification(count));
+    } catch (error) {
+      console.error("Błąd przy pobieraniu powiadomień:", error);
+    }
+  };
+}
+
 // reducer
 const reductor = (state = initialState, action) => {
   switch (action.type) {
@@ -171,6 +211,11 @@ const reductor = (state = initialState, action) => {
         ...state,
         lives: action.payload.lives,
         secondsToHeal: action.payload.secondsToHeal,
+      };
+    case SET_NOTIFICATION:
+      return {
+        ...state,
+        notification: action.payload,
       };
 
     case SET_EXPERIENCE:

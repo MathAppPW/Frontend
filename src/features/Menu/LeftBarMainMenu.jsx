@@ -19,6 +19,8 @@ import profile9 from '../../assets/images/ProfileImages/9.png';
 function LeftBarMainMenu(props) {
   const navigate = useNavigate();
   const username = useSelector((state) => state.userName);
+  const notification = useSelector((state) => state.notification);
+  console.log("Notifivation %d", notification)
   const profilePicture = useSelector((state) => state.profilePicture);
 
   const profileImages = {
@@ -97,8 +99,10 @@ function LeftBarMainMenu(props) {
             <span className="material-icons">person</span> Profil
           </button>
           <button onClick={() => navigate("/powiadomienia")} className="button-main-menu">
-            <span className="material-icons" >notifications</span> Powiadomienia
+            <span className="material-icons" >notifications </span> Powiadomienia 
+            {notification > 0 && <span className="notification-dot" />}
           </button>
+          
         </div>
 
         <button className="button-log-out" onClick={handleLogout}>Wyloguj</button>

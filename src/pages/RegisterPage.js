@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import "../styles/log-page.css";
 import { useDispatch } from "react-redux";
-import { fetchUserProfile} from "../../src/store/reducer.jsx";
+import { fetchUserProfile, fetchNotifications} from "../../src/store/reducer.jsx";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const RegisterPage = () => {
   
         if (response.ok) {
           await dispatch(fetchUserProfile());
+          await dispatch(fetchNotifications());
           navigate("/menu");
         } else {
           localStorage.removeItem("accessToken");
@@ -92,6 +93,7 @@ const RegisterPage = () => {
         localStorage.setItem("accessToken", data.accessToken);
         setErrorMessage("");
         await dispatch(fetchUserProfile());
+        await dispatch(fetchNotifications());
         navigate("/menu");
       } else {
         const errorData = await response.json();
