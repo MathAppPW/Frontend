@@ -19,16 +19,19 @@ import rocket2 from '../../assets/images/RocketsImages/2.png';
 import rocket3 from '../../assets/images/RocketsImages/3.png';
 import rocket4 from '../../assets/images/RocketsImages/4.png';
 
+import UserProfilePopup from "../../components/Popup/UserProfilePopup";
+
 
 const RankList = () => {
 
     const RankLenght = 50;
 
-    const [inRank, setInRank] = useState("0")
+
     const [rank, setRank] = useState();
     const [searchError, setSearchError] = useState();
-    const [onlyFriends, setOnlyFriends] = useState(false);
 
+
+    const [showUserPopup, setShowUserPopup] = useState(false);
     const username = useSelector((state) => state.userName);
     const profilePicture = useSelector((state) => state.profilePicture)
 
@@ -135,30 +138,37 @@ const RankList = () => {
 
                 <div className="rank-all-container">
                     <div className="rank-all-container-list">
-                    {!rank || !rank.rankingEntries ? (
-                        <p>Pobieranie</p>
-                    ) : (
-                        rank.rankingEntries.map((friend, index) => {
-                            const isCurrentUser = friend.username === username;
-                            return (
-                                <div
-                                    className={`one-friend-record ${isCurrentUser ? 'one-friend-record-my' : ''}`}
-                                    key={index}
-                                >
-                                    <p>{index + 1}.</p>
-                                    <div className={`one-friend-container-rank ${isCurrentUser ? 'one-friend-container-rank-my' : ''}`}>
-                                        <p className='num-of-exercies'>{friend.score} zadań</p>
-                                        <img className="one-friend-profile-picture-rank" src={profileImages[friend.profileSkin]} />
-                                        <p className="friend-userName-rank">{friend.username}</p>
-                                        <div className="firnds-onfo-container-rank">
-                                            <p className="friend-level-rank">Level: 0</p>
+                        {!rank || !rank.rankingEntries ? (
+                            <p>Pobieranie</p>
+                        ) : (
+                            rank.rankingEntries.map((friend, index) => {
+                                const isCurrentUser = friend.username === username;
+                                return (
+                                    <div
+                                        className={`one-friend-record ${isCurrentUser ? 'one-friend-record-my' : ''}`}
+                                        key={index}
+                                    >
+                                        <p>{index + 1}.</p>
+                                        <div onClick={() => setShowUserPopup(friend.username)} className={`one-friend-container-rank ${isCurrentUser ? 'one-friend-container-rank-my' : ''}`}>
+                                            <p className='num-of-exercies'>{friend.score} zadań</p>
+                                            <img className="one-friend-profile-picture-rank" src={profileImages[friend.profileSkin]} />
+                                            <p className="friend-userName-rank">{friend.username}</p>
+                                            <div className="firnds-onfo-container-rank">
+                                                <p className="friend-level-rank">Level: 0</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })
+                                );
+                            })
 
-                    )}
+                        )}
+                        {showUserPopup && (
+                            <UserProfilePopup
+                                username={showUserPopup}
+                                onClose={() => setShowUserPopup(false)}
+                            />
+                        )}
+
                     </div>
 
 
