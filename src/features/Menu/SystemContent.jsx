@@ -71,7 +71,6 @@ export default function SystemMenuPage() {
         };
       });
 
-      /* ───── DODAJEMY TEMAT TESTOWY ───── */
       /*
       m["Testowy temat"] = {
         task: 2,          // pierwszy task aktywny
@@ -80,7 +79,6 @@ export default function SystemMenuPage() {
       };
       titles.push("Testowy temat");
       */
-      /* ───────────────────────────────── */
 
       setMap(m);
       setKeys(titles);
@@ -121,6 +119,7 @@ export default function SystemMenuPage() {
   return (
     <div className="main-content-contener">
       <BacgroundTwo />
+      <button className="system-exit-button" onClick={() => navigate(`/menu`)}>x</button>
 
       {/* strzałka ↑ */}
       <div

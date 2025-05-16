@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile, fetchNotifications} from "../../src/store/reducer.jsx";
+import Loading from "../components/Loading/Loading.jsx";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -47,9 +49,11 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (username.length < 8) {
       setErrorMessage("Nazwa użytkownika musi mieć co najmniej 8 znaków.");
+      setIsLoading(false);
       return;
     }
 
@@ -57,6 +61,7 @@ const LoginPage = () => {
       setErrorMessage(
         "Hasło musi mieć min. 8 znaków, 1 małą literę, 1 dużą literę, 1 cyfrę i 1 znak specjalny."
       );
+      setIsLoading(false);
       return;
     }
 
@@ -80,13 +85,16 @@ const LoginPage = () => {
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.detail || "Błąd logowania.");
+        setIsLoading(false);
       }
     } catch (error) {
       setErrorMessage("Błąd połączenia z serwerem.");
+      setIsLoading(false);
     }
   };
 
   return (
+    //<Loading />
     <div className="auth-container">
       <Bacground />
 
@@ -100,36 +108,42 @@ const LoginPage = () => {
       <div className="contour s-left-bottom"></div>
       <h1 className="app-title">SpaceMath</h1>
       <div className="auth-box">
-        <form onSubmit={handleLogin}>
-          <p className="auth-words">Nazwa użytkownika</p>
-          <input
-            type="text"
-            className="auth-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <form onSubmit={handleLogin}>
+              <p className="auth-words">Nazwa użytkownika</p>
+              <input
+                type="text"
+                className="auth-input"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
 
-          <p className="auth-words">Hasło</p>
-          <input
-            type="password"
-            className="auth-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+              <p className="auth-words">Hasło</p>
+              <input
+                type="password"
+                className="auth-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-          <button type="submit" className="auth-button">
-            Zaloguj się
-          </button>
-        </form>
+              <button type="submit" className="auth-button">
+                Zaloguj się
+              </button>
+            </form>
 
-        <div className="auth-links">
-          <a href="/forgot-password">Zapomniałeś hasła?</a>
-          <a href="/register">Zarejestruj się</a>
-        </div>
+            <div className="auth-links">
+              <a href="/forgot-password">Zapomniałeś hasła?</a>
+              <a href="/register">Zarejestruj się</a>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

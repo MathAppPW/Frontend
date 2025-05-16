@@ -18,6 +18,7 @@ import rocket1 from "../../assets/images/RocketsImages/1.png";
 import rocket2 from "../../assets/images/RocketsImages/2.png";
 import rocket3 from "../../assets/images/RocketsImages/3.png";
 import rocket4 from "../../assets/images/RocketsImages/4.png";
+import Loading from "../Loading/Loading";
 
 const avatarImages = {
   0: profile0,
@@ -94,7 +95,7 @@ const UserProfilePopup = ({ username, onClose }) => {
   if (!userData) {
     return (
       <Popup onClose={onClose}>
-        <p>Ładowanie danych...</p>
+        <Loading/>
       </Popup>
     );
   }

@@ -2,7 +2,7 @@
    LEFT & RIGHT TRIANGLE BARS
 ------------------------- */
 .bar-main-menu-small {
-  background-color: #1a084e;
+  background-color: #1a084e; 
   position: fixed;
   top: 0;
   bottom: 0;
@@ -90,26 +90,29 @@
      EXERCISE CONTAINER STYLES
 ------------------------- */
 
+
 .exercise-container-outer {
-  width: 100%;
-  margin-top: 5vh;
+  width: max(65vw, 320px);
+  height: max(90vh, 90vh);
   position: relative;
   z-index: 1;
   color: #ffffff;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .app-title-main-exercise {
   text-align: center;
   font-size: 4vw;
   margin: 0;
-  margin-bottom: 3vh;
+  margin-bottom: 4vh;
   color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .exercise-frame {
   width: 80%;
   max-width: 1400px;
+  height: auto;
   margin: 0 auto;
   background-color: #1b065b;
   border-radius: 12px;
@@ -118,6 +121,7 @@
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
   border: 4px solid #ffffff;
   position: relative;
+  margin-top: 10vh;
 }
 
 .exercise-frame::after {
@@ -147,7 +151,8 @@
   flex-direction: row;
   align-items: center;
   gap: 1.5vw;
-  margin-bottom: 2vh;
+  margin-bottom: 4vh;
+  margin-top: -1vh;
 }
 
 .close-icon {
@@ -165,12 +170,13 @@
   display: flex;
   align-items: center;
   position: relative;
+  margin-top: -3px;
 }
 
 .exercise-progress {
   height: 100%;
   width: 0%;
-  background-color: #6138cf;
+  background-color: #ad15f3;
   border-radius: 0.7vh;
   transition: width 0.3s ease;
 }
@@ -184,11 +190,13 @@
 
 .heart-icon {
   font-size: 2vw;
+  margin-top: -6px;
 }
 
 .life-left {
   font-size: 2vw;
   color: #ff4c8b;
+  margin-top: -2px;
 }
 
 .exercise-content {
@@ -198,13 +206,13 @@
 .exercise-box {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 2vh;
-  margin-bottom: 2vh;
+  padding: 1.5vh;
+  margin-bottom: 1.5vh;
 }
 
 .exercise-question {
   margin: 0;
-  font-size: 1.8vw;
+  font-size: 1.2vw;
   line-height: 1.4;
 }
 
@@ -222,41 +230,78 @@
 
 .answer-button {
   display: inline-block;
-  font-family: "Orbitron", sans-serif;
+  font-family: "Lato", sans-serif;
   background-color: #160c6f;
   border: 2px solid #ffffff;
   border-radius: 8px;
   color: #ffffff;
-  padding: 1.2vh 2.4vh;
+  padding: 1.2vh 1vw;
+  font-size: 1.2vw;
+  margin: 0.8vh 1vw;
   cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  font-size: 1.3vw;
-  margin: 0.7rem;
+  box-sizing: border-box;
+  transition:
+    background-color 0.3s ease,
+    border-color     0.3s ease,
+    box-shadow       0.3s ease,
+    transform        0.2s ease;
 }
 
 .answer-button:hover {
   background-color: #ad15f3;
+  border-color:   #ad15f3;
+  transform: scale(1.03);
 }
 
-.answer-button.selected {
+.answer-button.selected:not(.correct):not(.incorrect) {
   background-color: #ad15f3;
-  border-color: #ad15f3;
+  border-color:     #ffffff;  
+  transform: scale(1.05);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.6),
+    0 0 0 4px rgba(255,255,255,0.3),
+    0 4px 10px rgba(0,0,0,0.2);
 }
 
+@keyframes pulseCorrect {
+  0%   { box-shadow: 0 0 0   0   rgba(26,255,26,0.8); }
+  50%  { box-shadow: 0 0 30px 30px rgba(26,255,26,0); }
+  100% { box-shadow: 0 0 0   0   rgba(26,255,26,0); }
+}
 .answer-button.correct {
   background-color: #1aff1a;
-  border-color: #00cc00;
-  color: #000;
+  border-color:     #00cc00;
+  color:            #000;
+  animation: pulseCorrect 1s ease-out 1;
+  box-shadow: none;
+  transform: none;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0);             }
+  25%     { transform: translateX(-6px) rotate(-2deg); }
+  50%     { transform: translateX(6px)  rotate(2deg);  }
+  75%     { transform: translateX(-6px) rotate(-1deg); }
+}
+@keyframes pulseWrong {
+  0%   { box-shadow: 0 0 0   0   rgba(255,26,26,0.8); }
+  50%  { box-shadow: 0 0 15px 15px rgba(255,26,26,0); }
+  100% { box-shadow: 0 0 0   0   rgba(255,26,26,0); }
 }
 .answer-button.incorrect {
   background-color: #ff1a1a;
-  border-color: #cc0000;
-  color: #000;
+  border-color:     #cc0000;
+  color:            #000;
+  animation:
+    shake      0.4s ease-in-out,
+    pulseWrong 0.8s ease-out 1;
+  box-shadow: none;
+  transform: none;
 }
 
 .hint-box {
   text-align: center;
-  margin-bottom: 3vh;
+  margin-bottom: 2vh;
 }
 
 .button-hint {
@@ -276,8 +321,8 @@
 }
 
 .hint-text {
-  margin: 1.5vh 0 0 0;
-  font-size: 1.3vw;
+  margin: 2.5vh 0 0 0;
+  font-size: 1.2vw;
 }
 
 .submit-box {
@@ -285,7 +330,7 @@
   margin-top: 3vh;
 }
 
-.auth-button {
+.auth-button-task {
   font-family: "Orbitron", sans-serif;
   background-color: #ad15f3;
   color: #ffffff;
@@ -293,11 +338,11 @@
   border-radius: 8px;
   padding: 1.2vh 2.4vh;
   cursor: pointer;
-  font-size: 1.4vw;
+  font-size: 1.2vw;
   transition: background-color 0.3s ease;
 }
 
-.auth-button:hover {
+.auth-button-task:hover {
   background-color: #ae05fdc1;
 }
 

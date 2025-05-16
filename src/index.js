@@ -9,6 +9,7 @@ import "./components/Borders.css";
 import "./styles/system-menu.css";
 import "./styles/profile-page.css";
 import "./styles/user-profile-popup.css";
+import "./styles/theory.css";
 
 import { Provider } from "react-redux";
 import store from "./store/store.jsx";

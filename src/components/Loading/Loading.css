@@ -1,0 +1,81 @@
+.loadingContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    position: relative;
+}
+
+.loadingText {
+    font-size: 1.3rem;
+    color: white;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.planet {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px white;
+}
+
+.orbitWrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 2s linear infinite;
+}
+
+.orbit1 {
+    animation-duration: 2s;
+}
+.orbit2 {
+    animation-duration: 3s;
+}
+.orbit3 {
+    animation-duration: 4s;
+}
+.orbit4 {
+    animation-duration: 5s;
+}
+
+.reverse {
+    animation-direction: reverse;
+}
+
+.satellite {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: -40px;
+    left: -5px;
+    box-shadow: 0 0 10px white;
+}
+
+.orbit2 .satellite {
+    top: -55px;
+}
+.orbit3 .satellite {
+    top: -70px;
+}
+.orbit4 .satellite {
+    top: -85px;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}

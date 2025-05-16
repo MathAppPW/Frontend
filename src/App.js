@@ -14,6 +14,7 @@ import Friends from "./pages/Friends.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Rank from "./pages/Rank.jsx"
 import NotificationsPage from "./pages/NotificationsPage.jsx";
+import TheoryPage from "./pages/TheoryPage.jsx";
 
 
 const App = () => {
@@ -58,6 +59,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <ExerciseSeries />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/info"
+          element={
+            <ProtectedRoute>
+              <TheoryPage />
             </ProtectedRoute>
           }
         />
