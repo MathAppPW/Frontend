@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchUserProfile, setUserName } from "./store/reducer.jsx";
+import { fetchUserProfile, fetchNotifications } from "./store/reducer.jsx";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -16,6 +16,7 @@ import Rank from "./pages/Rank.jsx"
 import NotificationsPage from "./pages/NotificationsPage.jsx";
 import TheoryPage from "./pages/TheoryPage.jsx";
 
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -23,6 +24,7 @@ const App = () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
       dispatch(fetchUserProfile());
+      dispatch(fetchNotifications());
     }
   }, [dispatch]);
 

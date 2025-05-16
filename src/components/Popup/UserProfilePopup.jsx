@@ -53,24 +53,30 @@ const UserProfilePopup = ({ username, onClose }) => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => setUserData(res.data))
+      .then((res) => {
+        console.log("Odpowiedź z /search-verbose:", res);
+        setUserData(res.data);
+      })
       .catch((err) => console.error("Błąd profilu:", err));
   }, [username]);
+
 
   const handleAddFriend = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.post(`/Friends/new/${username}`, null, {
+      const response = await axios.post(`/Friends/new/${username}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("Odpowiedź z serwera:", response);
       setInvitationSent(true);
     } catch (error) {
       console.error("Błąd dodawania znajomego:", error);
     }
   };
-  
+
+
 
   const handleRemoveFriend = async () => {
     try {
@@ -102,6 +108,7 @@ const UserProfilePopup = ({ username, onClose }) => {
     maxStreak,
     exercisesCompleted,
     isFriend,
+    friendRequestSent,
   } = userData;
 
   return (
@@ -124,7 +131,11 @@ const UserProfilePopup = ({ username, onClose }) => {
             </div>
 
             <div className="user-buttons">
-              {isFriend ? (
+              {friendRequestSent ? (
+                <p style={{ color: "lightgreen", fontSize: "1.3vh", fontFamily: "Orbitron" }}>
+                  ✅ Wysłano zaproszenie
+                </p>
+              ) : (isFriend) ? (
                 <button className="friend-button-r" onClick={handleRemoveFriend}>
                   − Usuń ze znajomych
                 </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import { useDispatch } from "react-redux";
-import { fetchUserProfile} from "../../src/store/reducer.jsx";
+import { fetchUserProfile, fetchNotifications} from "../../src/store/reducer.jsx";
 import Loading from "../components/Loading/Loading.jsx";
 
 const LoginPage = () => {
@@ -28,6 +28,7 @@ const LoginPage = () => {
 
         if (response.ok) {
           await dispatch(fetchUserProfile());
+          await dispatch(fetchNotifications());
           navigate("/menu");
         } else {
           localStorage.removeItem("accessToken");
@@ -79,6 +80,7 @@ const LoginPage = () => {
         setErrorMessage("");
 
         await dispatch(fetchUserProfile());
+        await dispatch(fetchNotifications());
         navigate("/menu");
       } else {
         const errorData = await response.json();
