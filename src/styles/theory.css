@@ -55,12 +55,13 @@
 .theory-exit-button {
     position: absolute;
     top: 0;
-    right: 5px;
+    right: 10px;
     margin: 1vw;
     cursor: pointer;
     background-color: transparent;
     color: #ffffff;
     font-size: 4vh;
+    border: none;
 }
 
 .theory-box-content {
