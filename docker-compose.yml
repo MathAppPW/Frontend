@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: mathapppw/mathapppw-api2-postgres:latest
+    container_name: backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    environment:
+      - API_URL=http://backend:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
