@@ -10,6 +10,7 @@ const initialState = {
   secondsToHeal: 0,
   lastLivesUpdate: null,
   progress: 0,
+  notifications: 0,
 };
 
 // Action Types
@@ -18,6 +19,7 @@ const SET_USERNAME = "SET_USERNAME";
 const SET_LIVES = "SET_LIVES";
 const SET_EXPERIENCE = "SET_EXPERIENCE";
 const SET_STREAK = "SET_STREAK";
+const SET_NOTIFICATION = "SET_NOTIFICATION";
 
 // Action Creators
 export function setUserProfile(profileData) {
@@ -62,6 +64,13 @@ export function setStreak(streakValue) {
   };
 }
 
+export function setNotification(count) {
+  return {
+    type: SET_NOTIFICATION,
+    payload: count,
+  };
+}
+
 // Thunks
 export function fetchUserProfile() {
   return async (dispatch) => {
@@ -73,7 +82,7 @@ export function fetchUserProfile() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/UserProfile`, {
+      const response = await fetch(`/UserProfile`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -200,6 +209,37 @@ export function fetchStreakData() {
   };
 }
 
+export function fetchNotifications() {
+  return async (dispatch) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.error("Brak tokenu!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/Friends/getPendingRequests`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Nie udało się pobrać powiadomień");
+      }
+
+      const data = await response.json();
+      const count = data.length;
+      dispatch(setNotification(count));
+    } catch (error) {
+      console.error("Błąd przy pobieraniu powiadomień:", error);
+    }
+  };
+}
+
 // Reducer
 const reductor = (state = initialState, action) => {
   switch (action.type) {
@@ -265,6 +305,11 @@ const reductor = (state = initialState, action) => {
       return {
         ...state,
         streak: action.payload,
+      };
+    case SET_NOTIFICATION:
+      return {
+        ...state,
+        notifications: action.payload,
       };
     default:
       return state;
