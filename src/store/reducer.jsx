@@ -10,7 +10,7 @@ const initialState = {
   secondsToHeal: 0,
   lastLivesUpdate: null,
   progress: 0,
-  notifications: 0,
+  notification: 0,
 };
 
 // Action Types
