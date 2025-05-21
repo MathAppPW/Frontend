@@ -7,7 +7,11 @@ import rocket4 from "../../assets/images/RocketsImages/4.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { setLives, fetchExperience } from "../../store/reducer";
+import {
+  setLives,
+  fetchExperience,
+  fetchStreakData,
+} from "../../store/reducer";
 
 import MiniCalendar from "../../components/MiniCalenadar/MiniCalendar";
 
@@ -17,13 +21,11 @@ function RightBarMainMenu(props) {
   const streak = useSelector((state) => state.streak);
   const secondsToHealRedux = useSelector((state) => state.secondsToHeal);
 
-  //  NEW: read level & progress directly from Redux
   const level = useSelector((state) => state.level);
   const progress = useSelector((state) => state.progress);
 
   const dispatch = useDispatch();
 
-  // Local countdown for display
   const [secondsToHeal, setSecondsToHeal] = useState(secondsToHealRedux || 0);
 
   const token = localStorage.getItem("accessToken");
@@ -36,18 +38,27 @@ function RightBarMainMenu(props) {
     4: rocket4,
   };
 
-  // 1) Fetch Lives from server
+  // 1) Fetch Lives from server (local function)
   const fetchLives = async () => {
+    if (!token) {
+      console.error("Brak tokenu (RightBarMainMenu fetchLives)");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:3000/Lives", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
+          Accept: "application/json",
         },
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      // Update Redux
+      // Update Redux with the specific action creator
       dispatch(setLives(data.lives, data.secondsToHeal));
       // Update local countdown
       setSecondsToHeal(data.secondsToHeal);
@@ -56,13 +67,13 @@ function RightBarMainMenu(props) {
     }
   };
 
-  // 2) We can fetch experience from server -> store in Redux
-  //    We defined fetchExperience() thunk in the reducer
+  // Initial data fetching useEffect
   useEffect(() => {
-    fetchLives();
-    dispatch(fetchExperience());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchLives(); // Calls the local fetchLives function
+    dispatch(fetchExperience()); // Dispatches the thunk for experience
+    dispatch(fetchStreakData()); // Dispatches the thunk for streak data
   }, []);
+
 
   // If Redux changes the global countdown externally, sync local
   useEffect(() => {
@@ -71,15 +82,17 @@ function RightBarMainMenu(props) {
 
   // Timer logic for auto-healing
   useEffect(() => {
-    // If we already have 5 lives or no countdown left, do nothing
-    if (lives >= 5 || secondsToHeal <= 0) return;
+    if (lives >= 5 || secondsToHeal <= 0) {
+      return;
+    }
 
     const interval = setInterval(() => {
       setSecondsToHeal((prevTime) => {
         if (prevTime <= 1) {
-          const newLives = lives + 1;
+          const newLives = Math.min(lives + 1, 5);
           const newHealTime = newLives < 5 ? 300 : 0;
 
+          // Update Redux store
           dispatch(setLives(newLives, newHealTime));
           return newHealTime;
         }
@@ -107,7 +120,7 @@ function RightBarMainMenu(props) {
         <div className="streak-main-menu-cointener">
           <p>{props.motto}</p>
           <div className="streak-main-menu">
-            <p>{streak}</p>
+            <p>{streak}</p> {/* Streak value from Redux store */}
             <img src={fire} className="fire" alt="fire" />
           </div>
         </div>
@@ -134,7 +147,6 @@ function RightBarMainMenu(props) {
           </div>
 
           <div className="progress-container">
-            {/* level from Redux */}
             <p className="progress-number">{level}</p>
             <div className="progress-bar">
               <div
