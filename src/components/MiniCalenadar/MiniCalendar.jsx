@@ -10,33 +10,36 @@ function MiniCalendar() {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-  
-    axios.get("/Streak/callendar", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "text/plain"
-      }
-    })
-    .then((res) => {
-      const parsed = res.data;
-    
-      if (!Array.isArray(parsed)) {
-        return;
-      }
-    
-      const converted = parsed.map((item) => ({
-        start: new Date(item.start),
-        end: new Date(item.end)
-      }));
-    
-      setMarkedRanges(converted);
-    })    
+
+    axios
+      .get("/Streak/callendar", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "text/plain",
+        },
+      })
+      .then((res) => {
+        const parsed = res.data;
+
+        if (!Array.isArray(parsed)) return;
+
+        const toDateOnly = (str) => {
+          const d = new Date(str);
+          return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        };
+
+        const converted = parsed.map((item) => ({
+          start: toDateOnly(item.start),
+          end: toDateOnly(item.end),
+        }));
+
+        setMarkedRanges(converted);
+      });
   }, []);
-  
-  
 
   const isInRange = (date, range) => {
-    return date >= range.start && date <= range.end;
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return d >= range.start && d <= range.end;
   };
 
   const getDaysInMonth = (year, month) => {
@@ -90,7 +93,9 @@ function MiniCalendar() {
           day ? (
             <div
               key={index}
-              className={`day${day.isToday ? " today" : ""}${day.isHighlighted ? " highlighted" : ""}`}
+              className={`day${day.isToday ? " today" : ""}${
+                day.isHighlighted ? " highlighted" : ""
+              }`}
             >
               {day.day}
             </div>
