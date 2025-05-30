@@ -309,7 +309,7 @@ const reductor = (state = initialState, action) => {
     case SET_NOTIFICATION:
       return {
         ...state,
-        notifications: action.payload,
+        notification: action.payload,
       };
     default:
       return state;
