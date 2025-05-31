@@ -100,6 +100,7 @@ const Notification = () => {
           console.error("Szczegóły odpowiedzi z backendu:", err.response.data);
         }
       });
+      console.log(notifi.length)
   };
 
   useEffect(() => {

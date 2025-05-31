@@ -20,6 +20,7 @@ import rocket4 from '../../assets/images/RocketsImages/4.png';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserProfilePopup from "../../components/Popup/UserProfilePopup";
+import Loading from "../../components/Loading/Loading.jsx";
 
 const ListOfFriends = () => {
 
@@ -29,7 +30,7 @@ const ListOfFriends = () => {
         }
     });
 
-    const [friends, setFriends] = useState([]);
+    const [friends, setFriends] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const [searchedFriend, setSearchedFriend] = useState(null);
     const [searchError, setSearchError] = useState(null);
@@ -86,42 +87,50 @@ const ListOfFriends = () => {
             <div className="list-of-friends-container">
                 <div className="header-container">
                     <p className="header-list-of-friends">Twoi znajomi</p>
-                    <p className="liczba-znaj">Masz {friends.length} znajomych</p>
+                    <p className="liczba-znaj">
+                        {friends === null
+                            ? "Ładowanie..."
+                            : `Masz ${friends.length} znajomych`}
+                    </p>
                 </div>
 
                 <div className="friends-container">
-                    {friends.length === 0 ? (
-                        <p>Nie masz jeszcze żadnych znajomych</p>
-                    ) : (
-                        friends.map((friend, index) => (
-                            <div
-                                className="one-friend-container"
-                                key={index}
-                                onClick={() => setShowUserPopup(friend.username)}
-                            >
-                                <img
-                                    className="one-friend-profile-picture"
-                                    src={profileImages[friend.avatarId]}
-                                />
-                                <p className="friend-userName">{friend.username}</p>
-                                <div className="firnds-onfo-container">
-                                    <p className="friend-level">Level: {friend.level}</p>
-                                    <div className="friend-streak-conainer">
-                                        <p className="friend-streak">
-                                            Streak: {friend.currentStreak.streak}
-                                        </p>
-                                        <img src={fire} className="fire-friend" />
-                                    </div>
-                                </div>
-                                <img
-                                    className="frind-rocket"
-                                    src={rocketImages[friend.rocketShipId]}
-                                />
-                            </div>
-                        ))
-                    )}
+                    {!friends ? (
+                        <Loading />) : (<>
+                            {
+                                friends.length === 0 ? (
+                                    <p>Nie masz jeszcze żadnych znajomych</p>
+                                ) : (
+                                    friends.map((friend, index) => (
+                                        <div
+                                            className="one-friend-container"
+                                            key={index}
+                                            onClick={() => setShowUserPopup(friend.username)}
+                                        >
+                                            <img
+                                                className="one-friend-profile-picture"
+                                                src={profileImages[friend.avatarId]}
+                                            />
+                                            <p className="friend-userName">{friend.username}</p>
+                                            <div className="firnds-onfo-container">
+                                                <p className="friend-level">Level: {friend.level}</p>
+                                                <div className="friend-streak-conainer">
+                                                    <p className="friend-streak">
+                                                        Streak: {friend.currentStreak.streak}
+                                                    </p>
+                                                    <img src={fire} className="fire-friend" />
+                                                </div>
+                                            </div>
+                                            <img
+                                                className="frind-rocket"
+                                                src={rocketImages[friend.rocketShipId]}
+                                            />
+                                        </div>
+                                    ))
+                                )
+                            }</>)}
 
-                    {/* Popup tylko raz, jeśli showUserPopup ma wartość */}
+                  
                     {showUserPopup && (
                         <UserProfilePopup
                             username={showUserPopup}
