@@ -806,7 +806,9 @@ function MainContainerExersiceSeries() {
                   {hintVisible ? "Ukryj podpowiedź" : "Pokaż podpowiedź"}
                 </button>
                 {hintVisible && (
-                  <p className="hint-text">{currentQuestion.hint}</p>
+                  <p className="hint-text">
+                    <Latex>{currentQuestion.hint}</Latex>
+                  </p>
                 )}
               </div>
             )}

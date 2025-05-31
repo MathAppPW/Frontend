@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bacground from "../features/Bacground/Bacground";
 import { useDispatch } from "react-redux";
-import { fetchUserProfile, fetchNotifications} from "../../src/store/reducer.jsx";
+import {
+  fetchUserProfile,
+  fetchNotifications,
+} from "../../src/store/reducer.jsx";
 import Loading from "../components/Loading/Loading.jsx";
 
 const LoginPage = () => {
@@ -52,15 +55,13 @@ const LoginPage = () => {
     setIsLoading(true);
 
     if (username.length < 8) {
-      setErrorMessage("Nazwa użytkownika musi mieć co najmniej 8 znaków.");
+      setErrorMessage("Niepoprawne dane logowania.");
       setIsLoading(false);
       return;
     }
 
     if (!isValidPassword(password)) {
-      setErrorMessage(
-        "Hasło musi mieć min. 8 znaków, 1 małą literę, 1 dużą literę, 1 cyfrę i 1 znak specjalny."
-      );
+      setErrorMessage("Niepoprawne dane logowania.");
       setIsLoading(false);
       return;
     }
@@ -84,7 +85,7 @@ const LoginPage = () => {
         navigate("/menu");
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.detail || "Błąd logowania.");
+        setErrorMessage(errorData.detail || "Niepoprawne dane logowania.");
         setIsLoading(false);
       }
     } catch (error) {

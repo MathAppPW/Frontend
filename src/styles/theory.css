@@ -24,6 +24,8 @@
     border: 2px solid #ffffff;
     gap: 2vh;
     overflow: hidden;
+    white-space: pre-line;
+    text-align: left;
 }
 
 .theory-box::after {
