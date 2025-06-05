@@ -425,17 +425,21 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .one-friend-profile-picture {
   height: 5.2vh;
   width: 5.2vh;
-  margin-left: 0.8vw;
+  margin-left: 0.7vw;
 }
 
 .friend-userName {
+  width: 5vw;
   font-size: 1.9vh;
-  margin-right: 17.3vw;
+  margin-right: 11.8vw;
+  text-align: left;
 }
 
 .frind-rocket {
