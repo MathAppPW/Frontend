@@ -237,12 +237,12 @@ const RankList = () => {
                                         <p className="friend-level-rank">Level: {level}</p>
                                     </div>
                                 </div></>) : (<>
-                                    {totalExercises == 0 ? <><p> ? </p><div className="one-friend-container-rank one-friend-container-rank-my one-friend-container-rank-null" >
-                                        <p className=' num-of-exercies-null'> Zrobiłeś {totalExercises} zadań </p>
+                                    {rank.yourScore == 0 ? <><p> ? </p><div className="one-friend-container-rank one-friend-container-rank-my one-friend-container-rank-null" >
+                                        <p className=' num-of-exercies-null'> Zrobiłeś {rank.yourScore} zadań </p>
                                         <p className=" friend-userName-rank-null"> Nie zostałeś jeszcze sklasyfikowany!</p>
                                         
                                     </div></> : <> <p> {rank.yourPosition} </p> <div className="one-friend-container-rank one-friend-container-rank-my" >
-                                        <p className='num-of-exercies'> {totalExercises} zadań </p>
+                                        <p className='num-of-exercies'> {rank.yourScore} zadań </p>
                                         <img className="one-friend-profile-picture-rank" src={profileImages[profilePicture]} />
                                         <p className="friend-userName-rank"> {username} </p>
                                         <div className="firnds-onfo-container-rank">
