@@ -34,9 +34,6 @@ const RankList = () => {
     const [userPosition, setUserPosition] = useState();
     const [userScore, setUserScore] = useState();
 
-
-    const [totalExercises, setTotalExercises] = useState();
-
     const [searchError, setSearchError] = useState();
     const [showUserPopup, setShowUserPopup] = useState(false);
     const username = useSelector((state) => state.userName);
@@ -109,14 +106,6 @@ const RankList = () => {
         if (username && username !== "Nieznany") {
             getGlobalRank();
         }
-
-        axios.get("/History/days", getAuthHeader())
-            .then(res => {
-                const data = res.data.days;
-                const totalEx = data.reduce((sum, d) => sum + d.exercisesCount, 0);
-                setTotalExercises(totalEx);
-            })
-            .catch(err => console.error("Błąd pobierania statystyk:", err));
 
         if (!rank || !rank.rankingEntries) return;
 
@@ -201,7 +190,7 @@ const RankList = () => {
                                     >
                                         <p>{index + 1}.</p>
                                         <div onClick={() => setShowUserPopup(friend.username)} className={`one-friend-container-rank ${isCurrentUser ? 'one-friend-container-rank-my' : ''}`}>
-                                            <p className='num-of-exercies'>{friend.score} zadań</p>
+                                            <p className='num-of-exercies'>{friend.score} serii zadań</p>
                                             <img className="one-friend-profile-picture-rank" src={profileImages[friend.profileSkin]} />
                                             <p className="friend-userName-rank">{friend.username}</p>
                                             <div className="firnds-onfo-container-rank">
@@ -230,7 +219,7 @@ const RankList = () => {
                         <div className='one-friend-record one-friend-record-my'>
                             {isIn ? (<><p>{userPosition}</p>
                                 <div className="one-friend-container-rank one-friend-container-rank-my" >
-                                    <p className='num-of-exercies'> {userScore} zadań </p>
+                                    <p className='num-of-exercies'> {userScore} serii zadań </p>
                                     <img className="one-friend-profile-picture-rank" src={profileImages[profilePicture]} />
                                     <p className="friend-userName-rank"> {username} </p>
                                     <div className="firnds-onfo-container-rank">
@@ -238,11 +227,11 @@ const RankList = () => {
                                     </div>
                                 </div></>) : (<>
                                     {rank.yourScore == 0 ? <><p> ? </p><div className="one-friend-container-rank one-friend-container-rank-my one-friend-container-rank-null" >
-                                        <p className=' num-of-exercies-null'> Zrobiłeś {rank.yourScore} zadań </p>
+                                        <p className=' num-of-exercies-null'> Zrobiłeś {rank.yourScore} serii zadań</p>
                                         <p className=" friend-userName-rank-null"> Nie zostałeś jeszcze sklasyfikowany!</p>
                                         
                                     </div></> : <> <p> {rank.yourPosition} </p> <div className="one-friend-container-rank one-friend-container-rank-my" >
-                                        <p className='num-of-exercies'> {rank.yourScore} zadań </p>
+                                        <p className='num-of-exercies'> {rank.yourScore} serii zadań</p>
                                         <img className="one-friend-profile-picture-rank" src={profileImages[profilePicture]} />
                                         <p className="friend-userName-rank"> {username} </p>
                                         <div className="firnds-onfo-container-rank">
